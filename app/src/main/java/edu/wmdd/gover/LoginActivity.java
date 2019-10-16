@@ -7,15 +7,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -34,11 +39,15 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        final EditText username = findViewById(R.id.username);
+        final EditText password = findViewById(R.id.password);
+
         Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
         loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                login(username.getText().toString().trim(), password.getText().toString().trim());
             }
         });
     }
@@ -51,17 +60,17 @@ public class LoginActivity extends Activity {
 //        super.onNewIntent(intent);
 //    }
 //
-    private void login() {
+    private void login(String username, String password) {
 
         //final String username = etUname.getText().toString().trim();
         //final String password = etPass.getText().toString().trim();
-        final String username = "deniscalixto";
-        final String password = "Infopuc1";
+//        final String username = "deniscalixto";
+//        final String password = "Infopuc1";
 
         JSONObject postparams = new JSONObject();
         try {
-            postparams.put("username", "deniscalixto");
-            postparams.put("password", "Infopuc!1");
+            postparams.put("username", username);
+            postparams.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -94,7 +103,7 @@ public class LoginActivity extends Activity {
 //        RequestQueue requestQueue = Volley.newRequestQueue(this);
 //        requestQueue.add(stringRequest);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,"http://10.0.2.2:8000/api/token/",postparams,
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.api_token_url), postparams,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -105,7 +114,17 @@ public class LoginActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(LoginActivity.this, "Timeout", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(LoginActivity.this, "Server is unavailable", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(LoginActivity.this, "Internet problem", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        }
                         Log.d("Volley", error.networkResponse.toString());
                     }
                 }) {
@@ -170,7 +189,7 @@ public class LoginActivity extends Activity {
             JSONObject jsonObject = response;
             String refresh = jsonObject.getString("refresh");
             String access = jsonObject.getString("access");
-            Toast.makeText(LoginActivity.this, refresh + "===" + access, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(LoginActivity.this, refresh + "===" + access, Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
