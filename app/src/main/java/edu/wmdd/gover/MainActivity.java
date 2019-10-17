@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         mList.setLayoutManager(linearLayoutManager);
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
+
+//        Toast.makeText(MainActivity.this, Auth.accessToken + "===" + Auth.refreshToken, Toast.LENGTH_SHORT).show();
 
         getData();
     }

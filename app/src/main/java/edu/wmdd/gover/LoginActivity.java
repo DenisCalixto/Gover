@@ -139,48 +139,6 @@ public class LoginActivity extends Activity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsObjRequest);
-
-//
-//        Auth0 auth0 = new Auth0(getString(R.string.auth0_client_id), getString(R.string.auth0_domain));
-//        auth0.setOIDCConformant(true);
-//
-//        WebAuthProvider.init(auth0)
-//                .withScheme("demo")
-//                .withAudience("https://api.exampleco.com/timesheets")
-//                .withResponseType(ResponseType.CODE)
-//                .withScope("create:timesheets read:timesheets openid profile email")
-//                .start(LoginActivity.this, new AuthCallback() {
-//                    @Override
-//                    public void onFailure(@NonNull final Dialog dialog) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                dialog.show();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onFailure(final AuthenticationException exception) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(LoginActivity.this, "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(@NonNull final Credentials credentials) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(LoginActivity.this, "Log In - Success", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                    }
-//                });
     }
 
     public void parseData(JSONObject response) {
@@ -190,6 +148,9 @@ public class LoginActivity extends Activity {
             String refresh = jsonObject.getString("refresh");
             String access = jsonObject.getString("access");
             //Toast.makeText(LoginActivity.this, refresh + "===" + access, Toast.LENGTH_SHORT).show();
+
+            Auth.accessToken = access;
+            Auth.refreshToken = refresh;
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
