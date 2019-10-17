@@ -10,10 +10,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -21,14 +28,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    //    private String url = "http://100.20.115.205/properties.json";
-    private String url = "http://159.65.44.135/api/jobs.json";
-//    private String url = "https://gist.githubusercontent.com/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
-//    private String url = "http://151.101.52.133/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
+    //private String url = "http://100.20.115.205/properties.json";
+    private String url = "http://10.0.2.2:8000/api/jobs";
+    //private String url = "http://159.65.44.135/api/jobs.json";
+    //private String url = "https://gist.githubusercontent.com/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
+    //private String url = "http://151.101.52.133/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
 
     private RecyclerView mList;
 
@@ -66,36 +76,90 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
 
-                        Property property = new Property();
-                        property.setSummary(jsonObject.getString("summary"));
-                        property.setId(jsonObject.getInt("id"));
-                        property.setImage_url(jsonObject.getString("image"));
+                                Property property = new Property();
+                                property.setSummary(jsonObject.getString("summary"));
+                                property.setId(jsonObject.getInt("id"));
+                                property.setImage_url(jsonObject.getString("image"));
 
-                        propertyList.add(property);
-                    } catch (JSONException e) {
-                        Log.d("Test", "Calling FAB");
-                        e.printStackTrace();
+                                propertyList.add(property);
+                            } catch (JSONException e) {
+                                Log.d("Test", "Calling FAB");
+                                e.printStackTrace();
+                                progressDialog.dismiss();
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
                         progressDialog.dismiss();
                     }
-                }
-                adapter.notifyDataSetChanged();
-                progressDialog.dismiss();
-            }
-        }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(MainActivity.this, "Timeout", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(MainActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(MainActivity.this, "Server is unavailable", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(MainActivity.this, "Internet problem", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        }
+                        Log.e("Volley", error.toString());
+                        Log.e("Volley", error.networkResponse.toString());
+                    }
+                }) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Volley", error.toString());
-                progressDialog.dismiss();
-            }
-        });
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
+
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        JSONObject jsonObject = response.getJSONObject(i);
+//
+//                        Property property = new Property();
+//                        property.setSummary(jsonObject.getString("summary"));
+//                        property.setId(jsonObject.getInt("id"));
+//                        property.setImage_url(jsonObject.getString("image"));
+//
+//                        propertyList.add(property);
+//                    } catch (JSONException e) {
+//                        Log.d("Test", "Calling FAB");
+//                        e.printStackTrace();
+//                        progressDialog.dismiss();
+//                    }
+//                }
+//                adapter.notifyDataSetChanged();
+//                progressDialog.dismiss();
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("Volley", error.toString());
+//                progressDialog.dismiss();
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(jsonArrayRequest);
+
     }
 }
