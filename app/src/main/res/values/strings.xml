@@ -4,4 +4,6 @@
     <string name="auth0_domain">Log in</string>
     <string name="api_url">http://10.0.2.2:8080/timesheets</string>
     <string name="api_token_url">http://10.0.2.2:8000/api/token/</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
 </resources>

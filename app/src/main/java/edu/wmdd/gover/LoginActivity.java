@@ -50,6 +50,9 @@ public class LoginActivity extends Activity {
                 login(username.getText().toString().trim(), password.getText().toString().trim());
             }
         });
+
+        username.setHint(getString(R.string.username_hint));
+        password.setHint(getString(R.string.password_hint));
     }
 
     //    @Override
@@ -152,7 +155,7 @@ public class LoginActivity extends Activity {
             Auth.accessToken = access;
             Auth.refreshToken = refresh;
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, PropertyActivity.class);
             startActivity(intent);
         } catch (JSONException e) {
             e.printStackTrace();
