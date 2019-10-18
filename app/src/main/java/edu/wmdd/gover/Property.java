@@ -11,12 +11,6 @@ public class Property {
 
     }
 
-//    public Property(String description, int id, String image_url) {
-//        this.description = description;
-//        this.id = id;
-//        this.image_url = image_url;
-//    }
-
     public String getName() {
         return name;
     }

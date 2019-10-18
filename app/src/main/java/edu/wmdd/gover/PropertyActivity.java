@@ -76,6 +76,15 @@ public class PropertyActivity extends AppCompatActivity {
             }
         });
 
+        Button btInspections = (Button) findViewById(R.id.btInspections);
+        btInspections.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
+                startActivity(intent);
+            }
+        });
+
         getData();
     }
 

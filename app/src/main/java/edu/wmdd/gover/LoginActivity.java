@@ -1,7 +1,6 @@
 package edu.wmdd.gover;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
@@ -23,10 +21,8 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,20 +51,7 @@ public class LoginActivity extends Activity {
         password.setHint(getString(R.string.password_hint));
     }
 
-    //    @Override
-//    protected void onNewIntent(Intent intent) {
-//        if (WebAuthProvider.resume(intent)) {
-//            return;
-//        }
-//        super.onNewIntent(intent);
-//    }
-//
     private void login(String username, String password) {
-
-        //final String username = etUname.getText().toString().trim();
-        //final String password = etPass.getText().toString().trim();
-//        final String username = "deniscalixto";
-//        final String password = "Infopuc1";
 
         JSONObject postparams = new JSONObject();
         try {
