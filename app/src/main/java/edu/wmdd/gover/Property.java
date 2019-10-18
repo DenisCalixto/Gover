@@ -2,7 +2,8 @@ package edu.wmdd.gover;
 
 public class Property {
 
-    public String summary;
+    public String name;
+    public String description;
     public int id;
     private String image_url;
 
@@ -10,18 +11,26 @@ public class Property {
 
     }
 
-    public Property(String summary, int id, String image_url) {
-        this.summary = summary;
-        this.id = id;
-        this.image_url = image_url;
+//    public Property(String description, int id, String image_url) {
+//        this.description = description;
+//        this.id = id;
+//        this.image_url = image_url;
+//    }
+
+    public String getName() {
+        return name;
     }
 
-    public String getSummary() {
-        return summary;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImage_url() {
@@ -39,4 +48,5 @@ public class Property {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
+
 }
