@@ -15,4 +15,5 @@
     <string name="property_detail_owner_hint">owner</string>
     <string name="property_detail_contact_hint">contact</string>
     <string name="property_detail_notes_hint">notes</string>
+    <string name="property_search_hint">Search Properties</string>
 </resources>
