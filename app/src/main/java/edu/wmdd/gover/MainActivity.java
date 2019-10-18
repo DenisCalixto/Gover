@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    private List<Property> propertyList;
+    private List<Job> jobList;
     private RecyclerView.Adapter adapter;
 
     @Override
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         mList = findViewById(R.id.main_list);
 
-        propertyList = new ArrayList<>();
-        adapter = new PropertyAdapter(getApplicationContext(),propertyList);
+        jobList = new ArrayList<>();
+        adapter = new JobAdapter(getApplicationContext(),jobList);
 
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -85,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
-                                Property property = new Property();
-                                property.setSummary(jsonObject.getString("summary"));
-                                property.setId(jsonObject.getInt("id"));
-                                property.setImage_url(jsonObject.getString("image"));
+                                Job job = new Job();
+                                job.setSummary(jsonObject.getString("summary"));
+                                job.setId(jsonObject.getInt("id"));
+                                job.setImage_url(jsonObject.getString("image"));
 
-                                propertyList.add(property);
+                                jobList.add(job);
                             } catch (JSONException e) {
                                 Log.d("Test", "Calling FAB");
                                 e.printStackTrace();
@@ -136,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
 //                    try {
 //                        JSONObject jsonObject = response.getJSONObject(i);
 //
-//                        Property property = new Property();
-//                        property.setSummary(jsonObject.getString("summary"));
-//                        property.setId(jsonObject.getInt("id"));
-//                        property.setImage_url(jsonObject.getString("image"));
+//                        Job job = new Job();
+//                        job.setSummary(jsonObject.getString("summary"));
+//                        job.setId(jsonObject.getInt("id"));
+//                        job.setImage_url(jsonObject.getString("image"));
 //
-//                        propertyList.add(property);
+//                        jobList.add(job);
 //                    } catch (JSONException e) {
 //                        Log.d("Test", "Calling FAB");
 //                        e.printStackTrace();
