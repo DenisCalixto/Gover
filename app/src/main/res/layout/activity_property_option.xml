@@ -29,36 +29,36 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btRealState"
         android:layout_width="180dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="50dp"
-        android:text="REAL STATE"
+        android:layout_marginTop="50dp"
+        android:text="@string/property_type_realstate"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
-        android:text="VEHICLE"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
+        android:id="@+id/btVehicle"
         android:layout_width="180dp"
         android:layout_height="70dp"
         android:layout_marginTop="50dp"
-        android:text="EQUIPMENT"
+        android:text="@string/property_type_vehicle"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btRealState" />
+
+    <Button
+        android:id="@+id/btEquipment"
+        android:layout_width="180dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/property_type_equipment"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btVehicle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
