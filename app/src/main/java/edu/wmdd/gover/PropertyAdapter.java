@@ -32,7 +32,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Property property = list.get(position);
 
-        holder.textDescription.setText(property.getDescription());
+        holder.textNotes.setText(property.getNotes());
         holder.textName.setText(String.valueOf(property.getName()));
 
         String url = String.valueOf(property.getImage_url());
@@ -53,13 +53,13 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textDescription, textName;
+        public TextView textNotes, textName;
         public NetworkImageView imageThumbnail;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textDescription = itemView.findViewById(R.id.property_description);
+            textNotes = itemView.findViewById(R.id.property_notes);
             textName = itemView.findViewById(R.id.property_name);
             imageThumbnail = itemView.findViewById(R.id.property_thumbnail);
         }

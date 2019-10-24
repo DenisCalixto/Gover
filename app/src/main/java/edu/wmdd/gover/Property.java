@@ -3,7 +3,7 @@ package edu.wmdd.gover;
 public class Property {
 
     public String name;
-    public String description;
+    public String notes;
     public int id;
     private String image_url;
 
@@ -19,12 +19,12 @@ public class Property {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getImage_url() {
