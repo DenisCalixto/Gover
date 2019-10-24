@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReportListActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ReportListActivity" />
         <activity android:name=".PropertyDetailActivity" />
         <activity android:name=".InspectionListActivity" />
         <activity android:name=".PropertyOptionActivity" />

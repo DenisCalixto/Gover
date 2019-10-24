@@ -31,24 +31,27 @@ import java.util.Map;
 
 public class LoginActivity extends Activity {
 
+    String username;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        final EditText username = findViewById(R.id.username);
-        final EditText password = findViewById(R.id.password);
+        final EditText txtUsername = findViewById(R.id.user_name);
+        final EditText txtPassword = findViewById(R.id.password);
 
         Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
         loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(username.getText().toString().trim(), password.getText().toString().trim());
+                username = txtUsername.getText().toString().trim();
+                login(username, txtPassword.getText().toString().trim());
             }
         });
 
-        username.setHint(getString(R.string.username_hint));
-        password.setHint(getString(R.string.password_hint));
+        txtUsername.setHint(getString(R.string.username_hint));
+        txtPassword.setHint(getString(R.string.password_hint));
     }
 
     private void login(String username, String password) {
@@ -137,6 +140,7 @@ public class LoginActivity extends Activity {
 
             Auth.accessToken = access;
             Auth.refreshToken = refresh;
+            Auth.username= username;
 
             Intent intent = new Intent(LoginActivity.this, PropertyActivity.class);
             startActivity(intent);

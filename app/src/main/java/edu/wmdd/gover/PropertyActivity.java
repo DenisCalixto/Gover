@@ -100,6 +100,15 @@ public class PropertyActivity extends AppCompatActivity {
             }
         });
 
+        Button btProfile = (Button) findViewById(R.id.btProfile);
+        btProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PropertyActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         getData();
     }
 
@@ -170,7 +179,7 @@ public class PropertyActivity extends AppCompatActivity {
 
                                 Property property = new Property();
                                 property.setName(jsonObject.getString("name"));
-                                property.setDescription(jsonObject.getString("description"));
+                                property.setNotes(jsonObject.getString("notes"));
                                 property.setId(jsonObject.getInt("id"));
                                 property.setImage_url(jsonObject.getString("thumbnail"));
 
