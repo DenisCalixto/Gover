@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtPropertyType" />
 
     <EditText
-        android:id="@+id/zip"
+        android:id="@+id/zipcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -49,7 +49,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zip" />
+        app:layout_constraintTop_toBottomOf="@+id/zipcode" />
 
     <EditText
         android:id="@+id/owner"
