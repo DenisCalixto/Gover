@@ -56,13 +56,20 @@ public class PropertyActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.property_list_activity);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         mList = findViewById(R.id.property_list);
 
         propertyList = new ArrayList<>();
-        adapter = new PropertyAdapter(getApplicationContext(),propertyList);
+
+        RecyclerViewClickListener listener = (view, position) -> {
+            //Toast.makeText(getApplicationContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+            //Log.d("Volley", propertyList.get(position).notes);
+            Intent intent = new Intent(PropertyActivity.this, PropertyDetailActivity.class);
+            intent.putExtra("property_id", propertyList.get(position).id);
+            startActivity(intent);
+        };
+
+        adapter = new PropertyAdapter(getApplicationContext(), propertyList, listener);
 
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

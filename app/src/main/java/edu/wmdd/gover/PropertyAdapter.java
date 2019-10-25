@@ -15,17 +15,19 @@ import java.util.List;
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHolder> {
 
     private Context context;
+    private RecyclerViewClickListener mListener;
     private List<Property> list;
 
-    public PropertyAdapter(Context context, List<Property> list) {
+    public PropertyAdapter(Context context, List<Property> list, RecyclerViewClickListener listener) {
         this.context = context;
         this.list = list;
+        mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.property_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, mListener);
     }
 
     @Override
@@ -52,16 +54,26 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         public TextView textNotes, textName;
         public NetworkImageView imageThumbnail;
+        private RecyclerViewClickListener mListener;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
 
             textNotes = itemView.findViewById(R.id.property_notes);
             textName = itemView.findViewById(R.id.property_name);
             imageThumbnail = itemView.findViewById(R.id.property_thumbnail);
+
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
         }
     }
 

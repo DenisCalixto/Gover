@@ -2,6 +2,7 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +35,12 @@ import java.util.Map;
 
 public class PropertyDetailActivity extends AppCompatActivity {
 
-    EditText address;
-    EditText zip;
-    EditText unit;
-    EditText owner;
-    EditText contact;
-    EditText notes;
+    EditText addressEdit;
+    EditText zipEdit;
+    EditText unitEdit;
+    EditText ownerEdit;
+    EditText contactEdit;
+    EditText notesEdit;
     TextView txtPropertyType;
     Button btSaveProperty;
 
@@ -55,19 +57,19 @@ public class PropertyDetailActivity extends AppCompatActivity {
         txtPropertyType.setText(Statics.propertyType);
         Statics.propertyType = "";
 
-        address = findViewById(R.id.address);
-        zip = findViewById(R.id.zipcode);
-        unit = findViewById(R.id.unit);
-        owner = findViewById(R.id.owner);
-        contact = findViewById(R.id.contact);
-        notes = findViewById(R.id.notes);
+        addressEdit = findViewById(R.id.address);
+        zipEdit = findViewById(R.id.zipcode);
+        unitEdit = findViewById(R.id.unit);
+        ownerEdit = findViewById(R.id.owner);
+        contactEdit = findViewById(R.id.contact);
+        notesEdit = findViewById(R.id.notes);
 
-        address.setHint(getString(R.string.property_detail_address_hint));
-        zip.setHint(getString(R.string.property_detail_zip_hint));
-        unit.setHint(getString(R.string.property_detail_unit_hint));
-        owner.setHint(getString(R.string.property_detail_owner_hint));
-        contact.setHint(getString(R.string.property_detail_contact_hint));
-        notes.setHint(getString(R.string.property_detail_notes_hint));
+        addressEdit.setHint(getString(R.string.property_detail_address_hint));
+        zipEdit.setHint(getString(R.string.property_detail_zip_hint));
+        unitEdit.setHint(getString(R.string.property_detail_unit_hint));
+        ownerEdit.setHint(getString(R.string.property_detail_owner_hint));
+        contactEdit.setHint(getString(R.string.property_detail_contact_hint));
+        notesEdit.setHint(getString(R.string.property_detail_notes_hint));
 
         btSaveProperty = (Button) findViewById(R.id.btSaveProperty);
         btSaveProperty.setOnClickListener(new View.OnClickListener() {
@@ -76,32 +78,96 @@ public class PropertyDetailActivity extends AppCompatActivity {
                 saveProperty();
             }
         });
+
+        Intent intent = getIntent();
+        Integer propertyId = intent.getIntExtra("property_id", 0);
+        if (propertyId != 0) {
+            fetchProperty(propertyId);
+        }
+    }
+
+    private void fetchProperty(Integer propertyId) {
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.api_property_url) + propertyId.toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley", response.toString());
+                        loadProperty(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(PropertyDetailActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        Log.d("Volley", error.networkResponse.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
+    }
+
+    public void loadProperty(JSONObject response) {
+
+        try {
+            JSONObject jsonObject = response;
+            String id = jsonObject.getString("id");
+            String name = jsonObject.getString("name");
+            String notes = jsonObject.getString("notes");
+            String address = jsonObject.getString("address");
+            String unit = jsonObject.getString("unit");
+            String zipcode = jsonObject.getString("zipcode");
+            String city = jsonObject.getString("city");
+            String province = jsonObject.getString("province");
+            String thumbnail = jsonObject.getString("thumbnail");
+            String owner = jsonObject.getString("owner");
+            String contact = jsonObject.getString("contact");
+
+            addressEdit.setText(address);
+            zipEdit.setText(zipcode);
+            unitEdit.setText(unit);
+            ownerEdit.setText(owner);
+            contactEdit.setText(contact);
+            notesEdit.setText(notes);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void saveProperty() {
 
-        String url = "http://10.0.2.2:8000/api/property/";
+        ImageView propertyImage = (ImageView) findViewById(R.id.propertyImage);
+        propertyImage.setImageResource(R.drawable.building);
 
         JSONObject postparams = new JSONObject();
         try {
-            postparams.put("address", address.getText());
-            postparams.put("zipcode", zip.getText());
-            postparams.put("unit", unit.getText());
-            postparams.put("owner", owner.getText());
-            postparams.put("contact", contact.getText());
-            postparams.put("notes", notes.getText());
+            postparams.put("address", addressEdit.getText());
+            postparams.put("zipcode", zipEdit.getText());
+            postparams.put("unit", unitEdit.getText());
+            postparams.put("owner", ownerEdit.getText());
+            postparams.put("contact", contactEdit.getText());
+            postparams.put("notes", notesEdit.getText());
+            postparams.put("property_type", "PL");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         // Volley post request with parameters
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, postparams,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, getString(R.string.api_property_url), postparams,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley", response.toString());
                         Toast.makeText(PropertyDetailActivity.this, "Property saved!", Toast.LENGTH_LONG).show();
-                        //parseData(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -115,8 +181,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<String,String>();
                 headers.put("Authorization", "Bearer "+ Auth.accessToken);
-//                headers.put("Charset", "UTF-8");
-//                headers.put("Content-Type", "application/json");
                 return headers;
             };
         };
