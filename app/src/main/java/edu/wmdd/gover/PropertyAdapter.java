@@ -2,6 +2,8 @@ package edu.wmdd.gover;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,16 +38,22 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
 
         holder.textNotes.setText(property.getNotes());
         holder.textName.setText(String.valueOf(property.getName()));
-
         String url = String.valueOf(property.getImage_url());
-        ImageLoader imageLoader;
 
-        imageLoader = CustomVolleyRequest.getInstance(this.context)
-                .getImageLoader();
-        imageLoader.get(url, ImageLoader.getImageListener(holder.imageThumbnail,
-                R.drawable.loading_shape, android.R.drawable
-                        .ic_dialog_alert));
-        holder.imageThumbnail.setImageUrl(url, imageLoader);
+        if (url != "" && url != null && !url.equals("null")) {
+            Log.d("Volley",property.getNotes() + " has image: " + property.getImage_url());
+            ImageLoader imageLoader;
+
+            imageLoader = CustomVolleyRequest.getInstance(this.context)
+                    .getImageLoader();
+            imageLoader.get(url, ImageLoader.getImageListener(holder.imageThumbnail,
+                    R.drawable.loading_shape, android.R.drawable
+                            .ic_dialog_alert));
+            holder.imageThumbnail.setImageUrl(url, imageLoader);
+        }
+        else {
+            Log.d("Volley",property.getNotes() + " has no image: " + property.getImage_url());
+        }
 
     }
 

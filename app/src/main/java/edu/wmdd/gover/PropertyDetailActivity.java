@@ -44,6 +44,8 @@ public class PropertyDetailActivity extends AppCompatActivity {
     TextView txtPropertyType;
     Button btSaveProperty;
 
+    private static Integer propertyId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        Integer propertyId = intent.getIntExtra("property_id", 0);
+        this.propertyId = intent.getIntExtra("property_id", 0);
         if (propertyId != 0) {
             fetchProperty(propertyId);
         }
@@ -92,7 +94,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Volley", response.toString());
+                        //Log.d("Volley", response.toString());
                         loadProperty(response);
                     }
                 },
@@ -150,6 +152,8 @@ public class PropertyDetailActivity extends AppCompatActivity {
 
         JSONObject postparams = new JSONObject();
         try {
+            if (this.propertyId != 0)
+                postparams.put("id", this.propertyId);
             postparams.put("address", addressEdit.getText());
             postparams.put("zipcode", zipEdit.getText());
             postparams.put("unit", unitEdit.getText());
@@ -161,13 +165,27 @@ public class PropertyDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Integer method;
+        String url;
+        if (this.propertyId != 0) {
+            method = Request.Method.PUT;
+            url = getString(R.string.api_property_url) + this.propertyId.toString() + "/";
+            Log.d("Volley", url);
+        }
+        else {
+            method = Request.Method.POST;
+            url = getString(R.string.api_property_url);
+        }
+
         // Volley post request with parameters
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, getString(R.string.api_property_url), postparams,
+        JsonObjectRequest request = new JsonObjectRequest(method, url, postparams,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley", response.toString());
                         Toast.makeText(PropertyDetailActivity.this, "Property saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PropertyDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
