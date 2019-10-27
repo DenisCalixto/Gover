@@ -6,6 +6,7 @@
     <string name="api_token_url">http://10.0.2.2:8000/api/token/</string>
     <string name="api_property_url">http://10.0.2.2:8000/api/property/</string>
     <string name="api_inspection_url">http://10.0.2.2:8000/api/inspection/</string>
+    <string name="api_inspection_template_url">http://10.0.2.2:8000/api/inspection_template/</string>
     <string name="api_report_url">http://10.0.2.2:8000/api/report/</string>
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>

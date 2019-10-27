@@ -25,7 +25,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.inspection_item, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.inspection_list_item, parent, false);
         return new ViewHolder(v);
     }
 

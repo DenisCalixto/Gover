@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".InspectionCreateActivity"></activity>
+        <activity android:name=".InspectionDetailActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".ReportListActivity" />
         <activity android:name=".PropertyDetailActivity" />
         <activity android:name=".InspectionListActivity" />

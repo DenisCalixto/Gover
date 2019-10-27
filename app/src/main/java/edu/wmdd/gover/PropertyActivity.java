@@ -80,11 +80,20 @@ public class PropertyActivity extends AppCompatActivity {
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
-        Button btAdd = (Button) findViewById(R.id.btAdd);
-        btAdd.setOnClickListener(new View.OnClickListener() {
+        Button btAddProperty = (Button) findViewById(R.id.btAddProperty);
+        btAddProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PropertyActivity.this, PropertyOptionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btCreateInspection = (Button) findViewById(R.id.btCreateInspection);
+        btCreateInspection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PropertyActivity.this, InspectionCreateActivity.class);
                 startActivity(intent);
             }
         });
