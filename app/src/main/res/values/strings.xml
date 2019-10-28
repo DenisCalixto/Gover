@@ -20,4 +20,8 @@
     <string name="property_detail_contact_hint">contact</string>
     <string name="property_detail_notes_hint">notes</string>
     <string name="property_search_hint">Search Properties</string>
+    <string name="inspection_item_status_damaged">Damaged</string>
+    <string name="inspection_item_status_scratched">Scratched</string>
+    <string name="inspection_item_status_missing">Missing</string>
+    <string name="inspection_item_status_good">Good</string>
 </resources>

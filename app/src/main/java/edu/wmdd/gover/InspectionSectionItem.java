@@ -1,6 +1,6 @@
 package edu.wmdd.gover;
 
-public class InspectionTemplateItem {
+public class InspectionSectionItem {
 
     private String name;
     private int id;
@@ -20,4 +20,5 @@ public class InspectionTemplateItem {
     public void setId(int id) {
         this.id = id;
     }
+
 }

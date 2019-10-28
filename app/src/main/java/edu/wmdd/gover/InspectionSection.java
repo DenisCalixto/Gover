@@ -1,12 +1,12 @@
 package edu.wmdd.gover;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class InspectionTemplateSection {
+public class InspectionSection {
 
     private String name;
     private int id;
-    private List<InspectionTemplateItem> items;
+    private ArrayList<InspectionSectionItem> items;
 
     public String getName() {
         return name;
@@ -24,11 +24,11 @@ public class InspectionTemplateSection {
         this.id = id;
     }
 
-    public List<InspectionTemplateItem> getItems() {
+    public ArrayList<InspectionSectionItem> getItems() {
         return items;
     }
 
-    public void setItems(List<InspectionTemplateItem> items) {
+    public void setItems(ArrayList<InspectionSectionItem> items) {
         this.items = items;
     }
 

@@ -9,27 +9,29 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InspectionDetailActivity extends AppCompatActivity {
@@ -37,11 +39,15 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private static Integer inspectionId;
     private static Integer propertyId;
     private Inspection inspection = null;
-    private ArrayList<InspectionTemplateSection> sections;
-    private ListView sectionsList;
-    private InspectorSectionListAdapter sectionsListAdapter;
+    private ArrayList<InspectionSection> sections;
+    private ExpandableListView sectionsList;
+    private InspectionSectionListAdapter sectionsListAdapter;
 
     Button btSaveInspection;
+
+    ExpandableListAdapter expandableListAdapter;
+    List<InspectionSection> expandableListTitle;
+    HashMap<InspectionSection, ArrayList<InspectionSectionItem>> expandableListDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,49 @@ public class InspectionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inspection_detail);
 
         sectionsList = findViewById(R.id.sectionsList);
+        sections = new ArrayList<InspectionSection>();
 
-        sections = new ArrayList<>();
+        sectionsList = (ExpandableListView) findViewById(R.id.sectionsList);
+//        expandableListDetail = ExpandableListDataPump.getData();
+//        expandableListTitle = new ArrayList<InspectionSection>(expandableListDetail.keySet());
+//        expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+//        sectionsList.setAdapter(expandableListAdapter);
+        sectionsList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition).getName() + " List Expanded.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        sectionsList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        expandableListTitle.get(groupPosition).getName() + " List Collapsed.",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+//        sectionsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v,
+//                                        int groupPosition, int childPosition, long id) {
+//                Toast.makeText(
+//                        getApplicationContext(),
+//                        expandableListTitle.get(groupPosition).getName()
+//                                + " -> "
+//                                + expandableListDetail.get(
+//                                expandableListTitle.get(groupPosition)).get(
+//                                childPosition), Toast.LENGTH_LONG
+//                ).show();
+//                return false;
+//            }
+//        });
 
         btSaveInspection = (Button) findViewById(R.id.btSaveInspection);
         btSaveInspection.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +115,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
         this.propertyId = intent.getIntExtra("property_id", 0);
         if (propertyId != 0) {
             //loadInspection();
-            loadTemplate();
+            fetchSections();
         } else {
             Toast.makeText(InspectionDetailActivity.this, "Error selecting property", Toast.LENGTH_LONG).show();
         }
@@ -93,11 +140,20 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     }
 
-    private void loadTemplate() {
+    private void loadTemplate(HashMap<InspectionSection, ArrayList<InspectionSectionItem>> localInspectionSectionItems) {
+        Log.d("Inspection", localInspectionSectionItems.toString());
+        expandableListDetail = localInspectionSectionItems;
+        expandableListTitle = new ArrayList<InspectionSection>(expandableListDetail.keySet());
+        expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        sectionsList.setAdapter(expandableListAdapter);
+    }
+
+    private void fetchSections() {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getString(R.string.api_inspection_template_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                HashMap<InspectionSection, ArrayList<InspectionSectionItem>> expandableListDetail = new HashMap<InspectionSection, ArrayList<InspectionSectionItem>>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         //getting the template
@@ -106,20 +162,23 @@ public class InspectionDetailActivity extends AppCompatActivity {
                             //getting the sections
                             JSONArray templateSections = templateObject.getJSONArray("sections");
                             for (int j = 0; j < templateSections.length(); j++) {
-                                InspectionTemplateSection section = new InspectionTemplateSection();
+                                InspectionSection section = new InspectionSection();
                                 section.setName(templateSections.getJSONObject(j).getString("name"));
                                 section.setId(templateSections.getJSONObject(j).getInt("id"));
 
                                 //getting the items
                                 JSONArray templateItems = templateSections.getJSONObject(j).getJSONArray("items");
-                                ArrayList<InspectionTemplateItem> items = new ArrayList<>();
+                                ArrayList<InspectionSectionItem> items = new ArrayList<>();
                                 for (int k = 0; k < templateItems.length(); k++) {
-                                    InspectionTemplateItem item = new InspectionTemplateItem();
+                                    InspectionSectionItem item = new InspectionSectionItem();
                                     item.setId(templateItems.getJSONObject(k).getInt("id"));
                                     item.setName(templateItems.getJSONObject(k).getString("name"));
+                                    items.add(item);
                                 }
                                 section.setItems(items);
                                 sections.add(section);
+
+                                expandableListDetail.put(section, section.getItems());
                             }
                         }
                     } catch (JSONException e) {
@@ -128,13 +187,26 @@ public class InspectionDetailActivity extends AppCompatActivity {
                     }
                 }
 
-                setupSectionsList();
+                //setupSectionsList();
+                loadTemplate(expandableListDetail);
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(InspectionDetailActivity.this, "Timeout", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(InspectionDetailActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(InspectionDetailActivity.this, "Server is unavailable", Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(InspectionDetailActivity.this, "Internet problem", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(InspectionDetailActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        }
                         Log.e("Volley", error.toString());
+                        Log.e("Volley", error.networkResponse.toString());
                     }
                 }) {
             @Override
@@ -149,38 +221,14 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setupSectionsList(){
-        sectionsListAdapter = new InspectorSectionListAdapter(this, sections);
-        sectionsList.setAdapter(sectionsListAdapter);
+    private HashMap<InspectionSection, ArrayList<InspectionSectionItem>> returnSections(HashMap<InspectionSection, ArrayList<InspectionSectionItem>> sections) {
+        return sections;
     }
 
-//    private void loadTemplate() {
-//
-//        try {
-//            JSONObject jsonObject = response;
-//            String id = jsonObject.getString("id");
-//            String name = jsonObject.getString("name");
-//            String notes = jsonObject.getString("notes");
-//            String address = jsonObject.getString("address");
-//            String unit = jsonObject.getString("unit");
-//            String zipcode = jsonObject.getString("zipcode");
-//            String city = jsonObject.getString("city");
-//            String province = jsonObject.getString("province");
-//            String thumbnail = jsonObject.getString("thumbnail");
-//            String owner = jsonObject.getString("owner");
-//            String contact = jsonObject.getString("contact");
-//
-//            addressEdit.setText(address);
-//            zipEdit.setText(zipcode);
-//            unitEdit.setText(unit);
-//            ownerEdit.setText(owner);
-//            contactEdit.setText(contact);
-//            notesEdit.setText(notes);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    private void setupSectionsList(){
+        sectionsListAdapter = new InspectionSectionListAdapter(this, sections);
+        sectionsList.setAdapter(sectionsListAdapter);
+    }
 
     private void loadItems() {
 

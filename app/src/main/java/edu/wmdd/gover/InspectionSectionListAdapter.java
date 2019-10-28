@@ -1,22 +1,23 @@
 package edu.wmdd.gover;
 
 import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.BaseAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
-public class InspectorSectionListAdapter extends BaseAdapter {
+public class InspectionSectionListAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<InspectionTemplateSection> itemsArrayList;
+    private ArrayList<InspectionSection> sectionsArrayList;
 
-    public InspectorSectionListAdapter(Context context, ArrayList<InspectionTemplateSection> itemsArrayList) {
+    public InspectionSectionListAdapter(Context context, ArrayList<InspectionSection> sectionsArrayList) {
 
         this.context = context;
-        this.itemsArrayList = itemsArrayList;
+        this.sectionsArrayList = sectionsArrayList;
     }
 
     @Override
@@ -31,12 +32,12 @@ public class InspectorSectionListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return itemsArrayList.size();
+        return sectionsArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return itemsArrayList.get(position);
+        return sectionsArrayList.get(position);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class InspectorSectionListAdapter extends BaseAdapter {
             // the getTag returns the viewHolder object set as a tag to the view
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.txtName.setText(itemsArrayList.get(position).getName());
+        holder.txtName.setText(sectionsArrayList.get(position).getName());
 
         return convertView;
     }
