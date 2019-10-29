@@ -148,7 +148,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
     private void saveProperty() {
 
         ImageView propertyImage = (ImageView) findViewById(R.id.propertyImage);
-        propertyImage.setImageResource(R.drawable.building);
+        //propertyImage.setImageResource(R.drawable.building);
 
         JSONObject postparams = new JSONObject();
         try {
@@ -170,7 +170,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         if (this.propertyId != 0) {
             method = Request.Method.PUT;
             url = getString(R.string.api_property_url) + this.propertyId.toString() + "/";
-            Log.d("Volley", url);
+            //Log.d("Volley", url);
         }
         else {
             method = Request.Method.POST;
@@ -182,7 +182,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Volley", response.toString());
+                        //Log.d("Volley", response.toString());
                         Toast.makeText(PropertyDetailActivity.this, "Property saved!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(PropertyDetailActivity.this, PropertyActivity.class);
                         startActivity(intent);
