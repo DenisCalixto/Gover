@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,14 +38,10 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private static Integer propertyId;
     private Inspection inspection = null;
     private ArrayList<InspectionSection> sections;
-    private ExpandableListView sectionsList;
+    private ListView sectionsList;
     private InspectionSectionListAdapter sectionsListAdapter;
 
     Button btSaveInspection;
-
-    ExpandableListAdapter expandableListAdapter;
-    List<InspectionSection> expandableListTitle;
-    HashMap<InspectionSection, ArrayList<InspectionSectionItem>> expandableListDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,47 +55,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
         sectionsList = findViewById(R.id.sectionsList);
         sections = new ArrayList<InspectionSection>();
 
-        sectionsList = (ExpandableListView) findViewById(R.id.sectionsList);
-//        expandableListDetail = ExpandableListDataPump.getData();
-//        expandableListTitle = new ArrayList<InspectionSection>(expandableListDetail.keySet());
-//        expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
-//        sectionsList.setAdapter(expandableListAdapter);
-        sectionsList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition).getName() + " List Expanded.",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        sectionsList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition).getName() + " List Collapsed.",
-                        Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-//        sectionsList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v,
-//                                        int groupPosition, int childPosition, long id) {
-//                Toast.makeText(
-//                        getApplicationContext(),
-//                        expandableListTitle.get(groupPosition).getName()
-//                                + " -> "
-//                                + expandableListDetail.get(
-//                                expandableListTitle.get(groupPosition)).get(
-//                                childPosition), Toast.LENGTH_LONG
-//                ).show();
-//                return false;
-//            }
-//        });
+        sectionsList = (ListView) findViewById(R.id.sectionsList);
 
         btSaveInspection = (Button) findViewById(R.id.btSaveInspection);
         btSaveInspection.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +69,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
         this.propertyId = intent.getIntExtra("property_id", 0);
         if (propertyId != 0) {
             //loadInspection();
-            fetchSections();
+            loadTemplate();
         } else {
             Toast.makeText(InspectionDetailActivity.this, "Error selecting property", Toast.LENGTH_LONG).show();
         }
@@ -140,20 +94,11 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     }
 
-    private void loadTemplate(HashMap<InspectionSection, ArrayList<InspectionSectionItem>> localInspectionSectionItems) {
-        Log.d("Inspection", localInspectionSectionItems.toString());
-        expandableListDetail = localInspectionSectionItems;
-        expandableListTitle = new ArrayList<InspectionSection>(expandableListDetail.keySet());
-        expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
-        sectionsList.setAdapter(expandableListAdapter);
-    }
-
-    private void fetchSections() {
+    private void loadTemplate() {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getString(R.string.api_inspection_template_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                HashMap<InspectionSection, ArrayList<InspectionSectionItem>> expandableListDetail = new HashMap<InspectionSection, ArrayList<InspectionSectionItem>>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         //getting the template
@@ -177,8 +122,6 @@ public class InspectionDetailActivity extends AppCompatActivity {
                                 }
                                 section.setItems(items);
                                 sections.add(section);
-
-                                expandableListDetail.put(section, section.getItems());
                             }
                         }
                     } catch (JSONException e) {
@@ -187,8 +130,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
                     }
                 }
 
-                //setupSectionsList();
-                loadTemplate(expandableListDetail);
+                setupSectionsList();
             }
         },
                 new Response.ErrorListener() {
@@ -219,10 +161,6 @@ public class InspectionDetailActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
 
-    }
-
-    private HashMap<InspectionSection, ArrayList<InspectionSectionItem>> returnSections(HashMap<InspectionSection, ArrayList<InspectionSectionItem>> sections) {
-        return sections;
     }
 
     private void setupSectionsList(){

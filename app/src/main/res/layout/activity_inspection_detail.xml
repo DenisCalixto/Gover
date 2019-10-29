@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ExpandableListView
+    <ListView
         android:id="@+id/sectionsList"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -29,18 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btSaveInspection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle"></ExpandableListView>
-
-<!--    <EditText-->
-<!--        android:id="@+id/notes"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:gravity="start|top"-->
-<!--        android:inputType="textMultiLine"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"></ListView>
 
     <Button
         android:id="@+id/btSaveInspection"
