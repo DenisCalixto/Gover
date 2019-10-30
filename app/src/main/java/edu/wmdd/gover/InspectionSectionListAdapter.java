@@ -13,6 +13,7 @@ public class InspectionSectionListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<InspectionSection> sectionsArrayList;
+    private InspectionSectionItemListAdapter sectionItemsListAdapter;
 
     public InspectionSectionListAdapter(Context context, ArrayList<InspectionSection> sectionsArrayList) {
 
@@ -56,6 +57,7 @@ public class InspectionSectionListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.inspection_section_item, null, true);
 
             holder.txtName = (TextView) convertView.findViewById(R.id.sectionName);
+            holder.itemsList = (ListView) convertView.findViewById(R.id.itemsList);
 
             convertView.setTag(holder);
         }else {
@@ -64,12 +66,16 @@ public class InspectionSectionListAdapter extends BaseAdapter {
         }
         holder.txtName.setText(sectionsArrayList.get(position).getName());
 
+        sectionItemsListAdapter = new InspectionSectionItemListAdapter(context, sectionsArrayList.get(position).getItems());
+        holder.itemsList.setAdapter(sectionItemsListAdapter);
+
         return convertView;
     }
 
     private class ViewHolder {
 
         protected TextView txtName;
+        protected ListView itemsList;
     }
 
 }

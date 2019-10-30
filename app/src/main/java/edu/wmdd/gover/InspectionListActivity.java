@@ -90,9 +90,9 @@ public class InspectionListActivity extends AppCompatActivity {
                             JSONObject jsonObject = response.getJSONObject(i);
                             Log.d("Json", jsonObject.getJSONObject("inspector").toString());
                             Inspection inspection = new Inspection();
-                            inspection.setInspectorName(jsonObject.getJSONObject("inspector").getString("first_name") + " " +
-                                                        jsonObject.getJSONObject("inspector").getString("last_name"));
-                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property").getString("name"));
+                            inspection.setInspectorName(jsonObject.getJSONObject("inspector_obj").getString("first_name") + " " +
+                                                        jsonObject.getJSONObject("inspector_obj").getString("last_name"));
+                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property_obj").getString("name"));
                             if (jsonObject.getString("inspection_date") != "") {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 try {
@@ -104,7 +104,7 @@ public class InspectionListActivity extends AppCompatActivity {
                             }
                             inspection.setNotes(jsonObject.getString("notes"));
                             inspection.setId(jsonObject.getInt("id"));
-                            inspection.setImage_url(jsonObject.getJSONObject("inspected_property").getString("thumbnail"));
+                            inspection.setImage_url(jsonObject.getJSONObject("inspected_property_obj").getString("thumbnail"));
 
                             inspectionList.add(inspection);
                         } catch (JSONException e) {
