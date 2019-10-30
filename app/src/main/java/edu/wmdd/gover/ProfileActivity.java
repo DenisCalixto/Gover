@@ -31,8 +31,8 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8000/api/user";
-    private String urlGetUserByUsername = "http://10.0.2.2:8000/api/users/get_by_username/?username=";
+    private String url = "http://159.65.44.135/api/user";
+    private String urlGetUserByUsername = "http://159.65.44.135/api/users/get_by_username/?username=";
 
     EditText user_name;
     EditText user_email;

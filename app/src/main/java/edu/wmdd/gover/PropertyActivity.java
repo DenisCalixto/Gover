@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class PropertyActivity extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8000/api/property";
+    private String url = "http://159.65.44.135/api/property";
 
     private RecyclerView mList;
 

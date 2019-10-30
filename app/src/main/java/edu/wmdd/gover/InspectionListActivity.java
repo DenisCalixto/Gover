@@ -42,7 +42,7 @@ import java.util.Map;
 
 public class InspectionListActivity extends AppCompatActivity {
 
-        private String url = "http://10.0.2.2:8000/api/inspection";
+        private String url = "http://159.65.44.135/api/inspection";
 
         private RecyclerView mList;
 

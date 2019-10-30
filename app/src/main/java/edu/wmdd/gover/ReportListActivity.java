@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class ReportListActivity extends AppCompatActivity {
 
-    private String url = "http://10.0.2.2:8000/api/report";
+    private String url = "http://159.65.44.135/api/report";
 
     private RecyclerView mList;
 
