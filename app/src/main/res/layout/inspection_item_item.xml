@@ -10,37 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
+    <TextView
+        android:id="@+id/itemStatus"
         android:layout_marginTop="5dp"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/radio_damaged"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inspection_item_status_damaged" />
-
-        <RadioButton
-            android:id="@+id/radio_scratched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inspection_item_status_scratched" />
-
-        <RadioButton
-            android:id="@+id/radio_missing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inspection_item_status_missing" />
-
-        <RadioButton
-            android:id="@+id/radio_good"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inspection_item_status_good" />
-    </RadioGroup>
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

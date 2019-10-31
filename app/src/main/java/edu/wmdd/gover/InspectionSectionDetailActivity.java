@@ -9,6 +9,6 @@ public class InspectionSectionDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inspection_section_detail);
+        setContentView(R.layout.activity_inspection_item_detail);
     }
 }

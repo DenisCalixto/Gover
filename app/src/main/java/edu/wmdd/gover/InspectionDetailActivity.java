@@ -42,7 +42,6 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private static Integer inspectionId = null;
     private static Integer propertyId;
 
-    private Inspection inspection = null;
     private ArrayList<InspectionSection> sections;
 
     private ListView sectionsList;
@@ -84,21 +83,25 @@ public class InspectionDetailActivity extends AppCompatActivity {
         manageScreenState();
     }
 
+    //check if an inspection was sent (from Inspection List) or a property (from Create Inspection property list)
     private void manageScreenState() {
         Intent intent = getIntent();
 
+        //id an inspection was sent
         if (intent.getExtras().containsKey("inspection_id")) {
             this.inspectionId = intent.getIntExtra("inspection_id", 0);
             if (this.inspectionId != 0) {
+                //load inspection
                 loadInspection();
             } else {
                 Toast.makeText(InspectionDetailActivity.this, "Error loading inspection", Toast.LENGTH_LONG).show();
             }
         }
         else {
+            //property was sent
             this.propertyId = intent.getIntExtra("property_id", 0);
             if (this.propertyId != 0) {
-                //loadInspection();
+                //manage draft
                 manageDraft();
             } else {
                 Toast.makeText(InspectionDetailActivity.this, "Error selecting property", Toast.LENGTH_LONG).show();
@@ -112,32 +115,8 @@ public class InspectionDetailActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getString(R.string.api_inspection_url) + this.inspectionId.toString(), null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject templateObject) {
-                        try {
-                            //getting the sections
-                            JSONArray templateSections = templateObject.getJSONArray("sections");
-                            for (int j = 0; j < templateSections.length(); j++) {
-                                InspectionSection section = new InspectionSection();
-                                section.setName(templateSections.getJSONObject(j).getString("name"));
-                                section.setId(templateSections.getJSONObject(j).getInt("id"));
-
-                                //getting the items
-                                JSONArray templateItems = templateSections.getJSONObject(j).getJSONArray("items");
-                                ArrayList<InspectionSectionItem> items = new ArrayList<>();
-                                for (int k = 0; k < templateItems.length(); k++) {
-                                    InspectionSectionItem item = new InspectionSectionItem();
-                                    item.setId(templateItems.getJSONObject(k).getInt("id"));
-                                    item.setName(templateItems.getJSONObject(k).getString("name"));
-                                    items.add(item);
-                                }
-                                section.setItems(items);
-                                sections.add(section);
-                            }
-                        } catch (JSONException e) {
-                            Log.d("Volley loadInspection", e.getStackTrace().toString());
-                            e.printStackTrace();
-                        }
-
+                    public void onResponse(JSONObject response) {
+                        parseInspection(response);
                         setupSectionsList();
                     }
                 },
@@ -160,6 +139,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    //Load a inspection draft of the property if it exists or create one if not
     private void manageDraft() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
@@ -172,7 +152,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //if there is not draft for the current Property
+                    //if there is not draft for the current Property, create one
                     if (response.length() == 0) {
                         createDraft();
                     }
@@ -210,18 +190,21 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
         JSONObject postparams = new JSONObject();
         try {
+            postparams.put("user_id", Auth.userId);
             postparams.put("property_id", this.propertyId);
-            postparams.put("status", "DR");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         // Volley post request with parameters
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, getString(R.string.api_inspection_url), postparams,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                getString(R.string.api_inspection_url) + "create_draft/", postparams,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Volley createDraft", response.toString());
+                        //Log.d("Volley createDraft", response.toString());
+                        parseInspection(response);
+                        setupSectionsList();
                     }
                 },
                 new Response.ErrorListener() {
@@ -246,6 +229,35 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    public void parseInspection(JSONObject response) {
+
+        try {
+            JSONObject jsonObject = response;
+            this.inspectionId = jsonObject.getInt("id");
+
+            JSONArray templateSections = jsonObject.getJSONArray("sections");
+            for (int j = 0; j < templateSections.length(); j++) {
+                InspectionSection section = new InspectionSection();
+                section.setName(templateSections.getJSONObject(j).getString("name"));
+                section.setId(templateSections.getJSONObject(j).getInt("id"));
+
+                //getting the items
+                JSONArray templateItems = templateSections.getJSONObject(j).getJSONArray("items");
+                ArrayList<InspectionSectionItem> items = new ArrayList<>();
+                for (int k = 0; k < templateItems.length(); k++) {
+                    InspectionSectionItem item = new InspectionSectionItem();
+                    item.setId(templateItems.getJSONObject(k).getInt("id"));
+                    item.setName(templateItems.getJSONObject(k).getString("name"));
+                    items.add(item);
+                }
+                section.setItems(items);
+                sections.add(section);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addSection() {
