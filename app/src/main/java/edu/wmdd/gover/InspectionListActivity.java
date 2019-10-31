@@ -106,7 +106,7 @@ public class InspectionListActivity extends AppCompatActivity {
 
                             inspectionList.add(inspection);
                         } catch (JSONException e) {
-                            Log.d("Test", "Calling FAB");
+                            Log.e("Volley", e.toString());
                             e.printStackTrace();
                             progressDialog.dismiss();
                         }

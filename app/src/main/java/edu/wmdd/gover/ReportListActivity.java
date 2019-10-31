@@ -108,7 +108,7 @@ public class ReportListActivity extends AppCompatActivity {
 
                         reportList.add(report);
                     } catch (JSONException e) {
-                        Log.d("Test", "Calling FAB");
+                        Log.e("Volley", e.toString());
                         e.printStackTrace();
                         progressDialog.dismiss();
                     }

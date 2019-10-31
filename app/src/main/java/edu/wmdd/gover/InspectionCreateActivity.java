@@ -102,7 +102,7 @@ public class InspectionCreateActivity extends AppCompatActivity {
 
                             propertyList.add(property);
                         } catch (JSONException e) {
-                            Log.d("Test", "Calling FAB");
+                            Log.e("Volley", e.toString());
                             e.printStackTrace();
                             progressDialog.dismiss();
                         }

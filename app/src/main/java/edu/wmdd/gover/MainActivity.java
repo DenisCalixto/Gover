@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 jobList.add(job);
                             } catch (JSONException e) {
-                                Log.d("Test", "Calling FAB");
+                                Log.e("Volley", e.toString());
                                 e.printStackTrace();
                                 progressDialog.dismiss();
                             }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                        jobList.add(job);
 //                    } catch (JSONException e) {
-//                        Log.d("Test", "Calling FAB");
+//                        Log.e("Volley", e.toString());
 //                        e.printStackTrace();
 //                        progressDialog.dismiss();
 //                    }
