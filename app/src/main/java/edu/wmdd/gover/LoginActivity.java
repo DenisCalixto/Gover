@@ -98,6 +98,7 @@ public class LoginActivity extends Activity {
                     public void onResponse(JSONObject response) {
                         Log.d("Volley", response.toString());
                         parseData(response);
+                        fecthUserData();
                     }
                 },
                 new Response.ErrorListener() {
@@ -147,6 +148,39 @@ public class LoginActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void fecthUserData() {JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,
+            getString(R.string.api_user_url) + "get_by_username/?username=" + Auth.username,
+            null, new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject response) {
+            try {
+                Auth.userId = response.getInt("id");
+                Auth.user_name = response.getString("first_name") + " " + response.getString("last_name");
+                Auth.user_email = response.getString("email");
+            } catch (JSONException e) {
+                Log.d("Volley", e.getStackTrace().toString());
+                e.printStackTrace();
+            }
+        }
+    },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Volley", error.toString());
+                }
+            }) {
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String,String> headers = new HashMap<String,String>();
+            headers.put("Authorization", "Bearer "+ Auth.accessToken);
+            return headers;
+        };
+    };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonRequest);
 
     }
 }
