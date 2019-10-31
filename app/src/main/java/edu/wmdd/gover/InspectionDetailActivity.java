@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -59,10 +60,22 @@ public class InspectionDetailActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_inspection_detail);
 
-        sectionsList = findViewById(R.id.sectionsList);
         sections = new ArrayList<InspectionSection>();
 
         sectionsList = (ListView) findViewById(R.id.sectionsList);
+        sectionsList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3)
+            {
+                InspectionSection section = (InspectionSection) adapter.getItemAtPosition(position);
+                Intent intent = new Intent(InspectionDetailActivity.this, InspectionSectionDetailActivity.class);
+                intent.putExtra("inspectionId", inspectionId);
+                intent.putExtra("sectionId", section.getId());
+                intent.putExtra("sectionName", section.getName());
+                startActivity(intent);
+            }
+        });
 
         btAddSection = (Button) findViewById(R.id.btAddSection);
         btAddSection.setOnClickListener(new View.OnClickListener() {
@@ -304,7 +317,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
                             }
                         }
                     } catch (JSONException e) {
-                        Log.d("Test", "Calling FAB");
+                        Log.e("Volley", e.toString());
                         e.printStackTrace();
                     }
                 }
