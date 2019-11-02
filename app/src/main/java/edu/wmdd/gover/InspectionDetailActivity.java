@@ -101,8 +101,8 @@ public class InspectionDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         //id an inspection was sent
-        if (intent.getExtras().containsKey("inspection_id")) {
-            this.inspectionId = intent.getIntExtra("inspection_id", 0);
+        if (intent.getExtras().containsKey("inspectionId")) {
+            this.inspectionId = intent.getIntExtra("inspectionId", 0);
             if (this.inspectionId != 0) {
                 //load inspection
                 loadInspection();
@@ -263,6 +263,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
                     InspectionSectionItem item = new InspectionSectionItem();
                     item.setId(templateItems.getJSONObject(k).getInt("id"));
                     item.setName(templateItems.getJSONObject(k).getString("name"));
+                    item.setStatus(templateItems.getJSONObject(k).getString("status"));
                     items.add(item);
                 }
                 section.setItems(items);
@@ -275,13 +276,13 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     private void addSection() {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
-        intent.putExtra("inspection_id", inspectionId);
+        intent.putExtra("inspectionId", inspectionId);
         startActivity(intent);
     }
 
     private void editSection(Integer section_id) {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
-        intent.putExtra("inspection_id", inspectionId);
+        intent.putExtra("inspectionId", inspectionId);
         intent.putExtra("section_id", section_id);
         startActivity(intent);
     }

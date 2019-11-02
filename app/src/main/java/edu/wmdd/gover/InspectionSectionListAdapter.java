@@ -66,7 +66,7 @@ public class InspectionSectionListAdapter extends BaseAdapter {
         }
         holder.txtName.setText(sectionsArrayList.get(position).getName());
 
-        if (holder.itemsList.getCount() > 0) {
+        if (sectionsArrayList.get(position).getItems().size() > 0) {
             sectionItemsListAdapter = new InspectionSectionItemListAdapter(context, sectionsArrayList.get(position).getItems());
             holder.itemsList.setAdapter(sectionItemsListAdapter);
         }
