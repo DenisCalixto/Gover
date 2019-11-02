@@ -34,8 +34,7 @@ import java.util.Map;
 
 public class InspectionSectionDetailActivity extends AppCompatActivity {
 
-    private static Integer inspectionId = null;
-    private static Integer sectionId;
+    private static Integer inspectionId = null, sectionId;
 
     private ArrayList<InspectionSectionItem> sectionsItems;
 
@@ -55,7 +54,7 @@ public class InspectionSectionDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         this.inspectionId = intent.getIntExtra("inspectionId", 0);
-        this.sectionId = intent.getIntExtra("sectionName", 0);
+        this.sectionId = intent.getIntExtra("sectionId", 0);
 
         sectionName = (TextView) findViewById(R.id.sectionName);
         sectionName.setText(intent.getStringExtra("sectionName"));
@@ -69,12 +68,13 @@ public class InspectionSectionDetailActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3)
             {
                 InspectionSectionItem sectionItem = (InspectionSectionItem) adapter.getItemAtPosition(position);
-                Intent intent = new Intent(InspectionSectionDetailActivity.this, InspectionSectionDetailActivity.class);
+                Intent intent = new Intent(InspectionSectionDetailActivity.this, InspectionItemDetailActivity.class);
                 intent.putExtra("inspectionId", inspectionId);
                 intent.putExtra("sectionId", sectionId);
                 intent.putExtra("sectionName", sectionName.getText());
-                intent.putExtra("sectionItemId", sectionItem.getId());
                 intent.putExtra("sectionItemName", sectionItem.getName());
+                intent.putExtra("templateItemId", sectionItem.getId());
+                intent.putExtra("origin", "template");
                 startActivity(intent);
             }
         });
