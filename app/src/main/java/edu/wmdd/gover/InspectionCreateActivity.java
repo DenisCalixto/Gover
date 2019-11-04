@@ -40,8 +40,6 @@ import java.util.Map;
 
 public class InspectionCreateActivity extends AppCompatActivity {
 
-        private String url = "http://159.65.44.135/api/property";
-
         private RecyclerView mList;
 
         private LinearLayoutManager linearLayoutManager;
@@ -89,7 +87,7 @@ public class InspectionCreateActivity extends AppCompatActivity {
             progressDialog.setMessage("Loading...");
             progressDialog.show();
 
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getString(R.string.api_property_url), new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     for (int i = 0; i < response.length(); i++) {
@@ -104,7 +102,7 @@ public class InspectionCreateActivity extends AppCompatActivity {
 
                             propertyList.add(property);
                         } catch (JSONException e) {
-                            Log.d("Test", "Calling FAB");
+                            Log.e("Volley", e.toString());
                             e.printStackTrace();
                             progressDialog.dismiss();
                         }
