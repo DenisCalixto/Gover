@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -41,6 +43,9 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -173,10 +178,49 @@ public class PropertyDetailActivity extends AppCompatActivity {
             ownerEdit.setText(owner);
             contactEdit.setText(contact);
             notesEdit.setText(notes);
+
+            if (thumbnail != null) {
+                new DownloadImageTask(propImage).execute(thumbnail);
+            }
+
+//            try {
+//                URL url = new URL(thumbnail);
+//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                propImage.setImageBitmap(bmp);
+//            }
+//            catch (MalformedURLException ex) {
+//                // Error occurred while creating the File
+//            }
+//            catch (IOException ex) {
+//            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
 
