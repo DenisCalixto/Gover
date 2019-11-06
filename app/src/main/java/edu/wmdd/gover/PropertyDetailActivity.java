@@ -123,8 +123,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
         if (propertyId != 0) {
             fetchProperty(propertyId);
         }
-
-
     }
 
     private void fetchProperty(Integer propertyId) {
@@ -160,14 +158,10 @@ public class PropertyDetailActivity extends AppCompatActivity {
 
         try {
             JSONObject jsonObject = response;
-            String id = jsonObject.getString("id");
-            String name = jsonObject.getString("name");
             String notes = jsonObject.getString("notes");
             String address = jsonObject.getString("address");
             String unit = jsonObject.getString("unit");
             String zipcode = jsonObject.getString("zipcode");
-            String city = jsonObject.getString("city");
-            String province = jsonObject.getString("province");
             String thumbnail = jsonObject.getString("thumbnail");
             String owner = jsonObject.getString("owner");
             String contact = jsonObject.getString("contact");
@@ -182,47 +176,10 @@ public class PropertyDetailActivity extends AppCompatActivity {
             if (thumbnail != null) {
                 new DownloadImageTask(propImage).execute(thumbnail);
             }
-
-//            try {
-//                URL url = new URL(thumbnail);
-//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                propImage.setImageBitmap(bmp);
-//            }
-//            catch (MalformedURLException ex) {
-//                // Error occurred while creating the File
-//            }
-//            catch (IOException ex) {
-//            }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmp = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmp = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmp;
-        }
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
-
 
     ///==============take picture
     String currentPhotoPath;
