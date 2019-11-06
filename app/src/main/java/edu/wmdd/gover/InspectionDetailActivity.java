@@ -2,9 +2,13 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,11 +31,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +56,17 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     Button btSaveInspection;
     Button btAddSection;
+    Button btnAddSignature;
+    final Context context = this;
+
+    //signature instances
+//    private SignaturePad mSignaturePad;
+//    private Button mClearButton;
+//    private Button mSaveButton;
+    Bitmap SignatureBitmap;
+    String encodedSignature;
+
+    //================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +110,71 @@ public class InspectionDetailActivity extends AppCompatActivity {
             }
         });
 
+        //signature
+        btnAddSignature = findViewById(R.id.addSignature);
+        btnAddSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.signature_layout);
+
+                Button mClearButton = (Button) dialog.findViewById(R.id.clear_button);
+                Button mSaveButton = (Button) dialog.findViewById(R.id.save_button);
+
+                SignaturePad mSignaturePad = (SignaturePad) dialog.findViewById(R.id.signature_pad);
+                mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+
+                    @Override
+                    public void onStartSigning() {
+                        //Event triggered when the pad is touched
+
+
+                    }
+
+                    @Override
+                    public void onSigned() {
+                        //Event triggered when the pad is signed
+                        mSaveButton.setEnabled(true);
+                        mClearButton.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onClear() {
+                        //Event triggered when the pad is cleared
+                        mSaveButton.setEnabled(false);
+                        mClearButton.setEnabled(false);
+                    }
+                });
+
+                mSaveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SignatureBitmap = mSignaturePad.getSignatureBitmap();
+                        bitmapToBase64();
+//                        base64ToImage();
+                    }
+                });
+                mClearButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSignaturePad.clear();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
+        //=====
+
         manageScreenState();
+    }
+    public void bitmapToBase64() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        SignatureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        encodedSignature = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.d("base64", Base64.encodeToString(byteArray, Base64.DEFAULT));
     }
 
     //check if an inspection was sent (from Inspection List) or a property (from Create Inspection property list)
