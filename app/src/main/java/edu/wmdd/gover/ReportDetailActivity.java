@@ -2,6 +2,8 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +51,14 @@ public class ReportDetailActivity extends AppCompatActivity {
     Bitmap myBitmap;
     String encodedImg;
     Bitmap decodeImg;
+
+
+
+    Button btReport;
+    Button btAddSection;
+    Button btnAddSignature;
+    final Context context = this;
+    Bitmap SignatureBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +104,66 @@ public class ReportDetailActivity extends AppCompatActivity {
                 fetchInspection(inspectionId);
             }
         }
+
+
+        //signature
+        btnAddSignature = findViewById(R.id.btSign);
+        btnAddSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.signature_layout);
+
+                Button mClearButton = (Button) dialog.findViewById(R.id.clear_button);
+                Button mSaveButton = (Button) dialog.findViewById(R.id.save_button);
+
+                SignaturePad mSignaturePad = (SignaturePad) dialog.findViewById(R.id.signature_pad);
+                mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+
+                    @Override
+                    public void onStartSigning() {
+                        //Event triggered when the pad is touched
+
+
+                    }
+
+                    @Override
+                    public void onSigned() {
+                        //Event triggered when the pad is signed
+                        mSaveButton.setEnabled(true);
+                        mClearButton.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onClear() {
+                        //Event triggered when the pad is cleared
+                        mSaveButton.setEnabled(false);
+                        mClearButton.setEnabled(false);
+                    }
+                });
+
+                mSaveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SignatureBitmap = mSignaturePad.getSignatureBitmap();
+//                        bitmapToBase64();
+//                        base64ToImage();
+                    }
+                });
+                mClearButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSignaturePad.clear();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
+        //=====
     }
+
 
     private void fetchReport(Integer reportId) {
 
