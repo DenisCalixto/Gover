@@ -8,8 +8,8 @@
     <string name="api_inspection_url">http://159.65.44.135/api/inspection/</string>
     <string name="api_inspection_template_url">http://159.65.44.135/api/inspection_template/</string>
     <string name="api_report_url">http://159.65.44.135/api/report/</string>
-    <string name="username_hint">username</string>
-    <string name="password_hint">password</string>
+<!--    <string name="username_hint">username</string>-->
+<!--    <string name="password_hint">password</string>-->
     <string name="property_type_realstate">REAL STATE</string>
     <string name="property_type_vehicle">VEHICLE</string>
     <string name="property_type_equipment">EQUIPMENT</string>

@@ -50,8 +50,8 @@ public class LoginActivity extends Activity {
             }
         });
 
-        txtUsername.setHint(getString(R.string.username_hint));
-        txtPassword.setHint(getString(R.string.password_hint));
+//        txtUsername.setHint(getString(R.string.username_hint));
+//        txtPassword.setHint(getString(R.string.password_hint));
     }
 
     private void login(String username, String password) {
