@@ -28,6 +28,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -165,6 +166,7 @@ public class PropertyActivity extends AppCompatActivity {
 
         getData();
     }
+
 
     private void getData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
