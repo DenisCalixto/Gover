@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,6 +28,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+//Start of Menu
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.content.Intent;
+//End of Menu
 
 public class PropertyActivity extends AppCompatActivity {
 
@@ -80,6 +89,35 @@ public class PropertyActivity extends AppCompatActivity {
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
+
+//Start Bottom Nav
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if( item.getItemId() == R.id.btProperties){
+                    Intent intent = new Intent(PropertyActivity.this, PropertyActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btInspections){
+                    Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btReports){
+                    Intent intent = new Intent(PropertyActivity.this, ReportListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(PropertyActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
+
+//End Bottom Nav
+
         Button btAddProperty = (Button) findViewById(R.id.btAddProperty);
         btAddProperty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,32 +136,32 @@ public class PropertyActivity extends AppCompatActivity {
             }
         });
 
-        Button btInspections = (Button) findViewById(R.id.btInspections);
-        btInspections.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btReports = (Button) findViewById(R.id.btReports);
-        btReports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PropertyActivity.this, ReportListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btProfile = (Button) findViewById(R.id.btProfile);
-        btProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PropertyActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Button btInspections = (Button) findViewById(R.id.btInspections);
+//        btInspections.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        Button btReports = (Button) findViewById(R.id.btReports);
+//        btReports.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(PropertyActivity.this, ReportListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        Button btProfile = (Button) findViewById(R.id.btProfile);
+//        btProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(PropertyActivity.this, ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         getData();
     }
