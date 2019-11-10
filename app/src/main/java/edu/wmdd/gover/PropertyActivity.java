@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,11 @@ import android.view.MenuItem;
 import android.content.Intent;
 //End of Menu
 
+//Start of Floating Action Button
+import android.view.animation.Animation;
+import android.widget.TextView;
+//End of FAB
+
 public class PropertyActivity extends AppCompatActivity {
 
     private String url = "http://159.65.44.135/api/property";
@@ -57,6 +64,11 @@ public class PropertyActivity extends AppCompatActivity {
     private DividerItemDecoration dividerItemDecoration;
     private List<Property> propertyList;
     private RecyclerView.Adapter adapter;
+
+    FloatingActionButton floatingAdd, floatingAddProperty, floatingCreateInspection;
+    TextView textCreate, textAddProperty;
+    Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    boolean isOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,23 +131,66 @@ public class PropertyActivity extends AppCompatActivity {
 
 //End Bottom Nav
 
-        Button btAddProperty = (Button) findViewById(R.id.btAddProperty);
-        btAddProperty.setOnClickListener(new View.OnClickListener() {
+//Start of Floating Action Button
+
+
+        floatingAdd = (FloatingActionButton) findViewById(R.id.floating_add);
+        floatingAddProperty = (FloatingActionButton) findViewById(R.id.floating_add_property);
+        floatingCreateInspection = (FloatingActionButton) findViewById(R.id.floating_create_inspection);
+        textCreate = (TextView) findViewById(R.id.text_create_inspection);
+        textAddProperty = (TextView) findViewById(R.id.text_add_property);
+
+        fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
+
+        rotateForward = AnimationUtils.loadAnimation(this,R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(this,R.anim.rotate_backward);
+
+        floatingAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View View) {
+                animateFab();
+            }
+        });
+
+        floatingAddProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animateFab();
                 Intent intent = new Intent(PropertyActivity.this, PropertyOptionActivity.class);
                 startActivity(intent);
             }
         });
 
-        Button btCreateInspection = (Button) findViewById(R.id.btCreateInspection);
-        btCreateInspection.setOnClickListener(new View.OnClickListener() {
+        floatingCreateInspection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animateFab();
                 Intent intent = new Intent(PropertyActivity.this, InspectionCreateActivity.class);
                 startActivity(intent);
             }
         });
+
+
+//End of Floating Action Button
+
+//        Button btAddProperty = (Button) findViewById(R.id.btAddProperty);
+//        btAddProperty.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(PropertyActivity.this, PropertyOptionActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        Button btCreateInspection = (Button) findViewById(R.id.btCreateInspection);
+//        btCreateInspection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(PropertyActivity.this, InspectionCreateActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 //        Button btInspections = (Button) findViewById(R.id.btInspections);
 //        btInspections.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +220,32 @@ public class PropertyActivity extends AppCompatActivity {
 //        });
 
         getData();
+    }
+
+    private void animateFab()
+    {
+        if(isOpen)
+        {
+            floatingAdd.startAnimation(rotateForward);
+            floatingAddProperty.startAnimation(fabClose);
+            floatingCreateInspection.startAnimation(fabClose);
+            textCreate.startAnimation(fabClose);
+            textAddProperty.startAnimation(fabClose);
+            floatingAddProperty.setClickable(false);
+            floatingCreateInspection.setClickable(false);
+            isOpen=false;
+        }
+        else
+        {
+            floatingAdd.startAnimation(rotateBackward);
+            floatingAddProperty.startAnimation(fabOpen);
+            floatingCreateInspection.startAnimation(fabOpen);
+            textCreate.startAnimation(fabOpen);
+            textAddProperty.startAnimation(fabOpen);
+            floatingAddProperty.setClickable(true);
+            floatingCreateInspection.setClickable(true);
+            isOpen=true;
+        }
     }
 
 
