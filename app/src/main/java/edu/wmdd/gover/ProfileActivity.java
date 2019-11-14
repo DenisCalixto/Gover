@@ -31,9 +31,6 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String url = "http://159.65.44.135/api/user";
-    private String urlGetUserByUsername = "http://159.65.44.135/api/users/get_by_username/?username=";
-
     EditText user_name;
     EditText user_email;
     EditText user_password;
@@ -71,11 +68,12 @@ public class ProfileActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, urlGetUserByUsername + Auth.username, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,
+                getString(R.string.api_user_url) + "get_by_username/?username=" + Auth.username,
+                null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //JSONObject jsonObject = response.getJSONObject();
                     user_name.setText(response.getString("first_name") + " " + response.getString("last_name"));
                     user_email.setText(response.getString("email"));
                     user_password.setText(response.getInt("password"));

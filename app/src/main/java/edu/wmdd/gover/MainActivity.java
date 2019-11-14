@@ -34,11 +34,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private String url = "http://100.20.115.205/properties.json";
     private String url = "http://159.65.44.135/api/jobs";
-    //private String url = "http://159.65.44.135/api/jobs.json";
-    //private String url = "https://gist.githubusercontent.com/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
-    //private String url = "http://151.101.52.133/aws1994/f583d54e5af8e56173492d3f60dd5ebf/raw/c7796ba51d5a0d37fc756cf0fd14e54434c547bc/anime.json";
 
     private RecyclerView mList;
 
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 jobList.add(job);
                             } catch (JSONException e) {
-                                Log.d("Test", "Calling FAB");
+                                Log.e("Volley", e.toString());
                                 e.printStackTrace();
                                 progressDialog.dismiss();
                             }
@@ -143,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                        jobList.add(job);
 //                    } catch (JSONException e) {
-//                        Log.d("Test", "Calling FAB");
+//                        Log.e("Volley", e.toString());
 //                        e.printStackTrace();
 //                        progressDialog.dismiss();
 //                    }

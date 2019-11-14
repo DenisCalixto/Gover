@@ -57,7 +57,7 @@ public class InspectionSectionItemListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.inspection_item_item, null, true);
 
             holder.txtItemName = (TextView) convertView.findViewById(R.id.itemName);
-            holder.radioGroupState = (RadioGroup) convertView.findViewById(R.id.radioGroupState);
+            holder.txtItemStatus = (TextView) convertView.findViewById(R.id.itemStatus);
 
             convertView.setTag(holder);
         }else {
@@ -65,14 +65,14 @@ public class InspectionSectionItemListAdapter extends BaseAdapter {
             holder = (InspectionSectionItemListAdapter.ViewHolder)convertView.getTag();
         }
         holder.txtItemName.setText(sectionItemsArrayList.get(position).getName());
+        holder.txtItemStatus.setText(sectionItemsArrayList.get(position).getStatus());
 
         return convertView;
     }
 
     private class ViewHolder {
 
-        protected TextView txtItemName;
-        protected RadioGroup radioGroupState;
+        protected TextView txtItemName, txtItemStatus;
     }
 
 }

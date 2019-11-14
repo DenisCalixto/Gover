@@ -43,8 +43,6 @@ import java.util.Map;
 
 public class ReportListActivity extends AppCompatActivity {
 
-    private String url = "http://159.65.44.135/api/report";
-
     private RecyclerView mList;
 
     private LinearLayoutManager linearLayoutManager;
@@ -86,7 +84,7 @@ public class ReportListActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getString(R.string.api_report_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for (int i = 0; i < response.length(); i++) {
@@ -110,7 +108,7 @@ public class ReportListActivity extends AppCompatActivity {
 
                         reportList.add(report);
                     } catch (JSONException e) {
-                        Log.d("Test", "Calling FAB");
+                        Log.e("Volley", e.toString());
                         e.printStackTrace();
                         progressDialog.dismiss();
                     }
