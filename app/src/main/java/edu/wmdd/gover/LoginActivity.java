@@ -66,6 +66,9 @@ public class LoginActivity extends Activity {
             }
         });
 
+//        txtUsername.setHint(getString(R.string.username_hint));
+//        txtPassword.setHint(getString(R.string.password_hint));
+
 //        btnGoi.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

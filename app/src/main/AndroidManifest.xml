@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".bottom_navigation"
+            android:label="@string/title_activity_bottom_navigation"></activity>
         <activity android:name=".ReportDetailActivity"></activity>
         <activity android:name=".InspectionItemDetailActivity" />
         <activity android:name=".InspectionSectionDetailActivity" />
