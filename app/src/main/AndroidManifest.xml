@@ -29,15 +29,6 @@
         <activity android:name=".PropertyDetailActivity" />
         <activity android:name=".InspectionListActivity" />
         <activity android:name=".PropertyOptionActivity" />
-        <activity android:name=".MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity android:name=".PropertyActivity" />
         <activity
             android:name=".LoginActivity"
