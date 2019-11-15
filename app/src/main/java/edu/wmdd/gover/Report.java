@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Report {
 
-    public Date report_date;
-    public String property_name;
-    public String notes;
-    public int id;
+    private Date report_date;
+    private String property_name;
+    private String notes;
+    private int id;
 
     public Report() {
 

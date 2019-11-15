@@ -65,7 +65,7 @@ public class ReportListActivity extends AppCompatActivity {
 
         RecyclerViewClickListener listener = (view, position) -> {
             Intent intent = new Intent(ReportListActivity.this, ReportDetailActivity.class);
-            intent.putExtra("reportId", reportList.get(position).id);
+            intent.putExtra("reportId", reportList.get(position).getId());
             startActivity(intent);
         };
         

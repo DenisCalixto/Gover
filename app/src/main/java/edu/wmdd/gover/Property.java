@@ -2,9 +2,9 @@ package edu.wmdd.gover;
 
 public class Property {
 
-    public String name;
-    public String notes;
-    public int id;
+    private String name;
+    private String notes;
+    private int id;
     private String image_url;
 
     public Property() {

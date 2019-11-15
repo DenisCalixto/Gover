@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Inspection {
 
-    public String inspector_name;
-    public Date inspection_date;
-    public String property_name;
-    public String notes;
-    public int id;
+    private String inspector_name;
+    private Date inspection_date;
+    private String property_name;
+    private String notes;
+    private int id;
     private String image_url;
 
     public Inspection() {
