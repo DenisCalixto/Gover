@@ -21,75 +21,207 @@
 
 <!--    </android.support.design.widget.AppBarLayout>-->
 
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar_properties"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/backgroundColor"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme" />-->
+
+
+    <SearchView
+        android:id="@+id/searchView"
+        style="@android:style/Widget.Material.Light.SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/background"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/property_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:defaultQueryHint="search"
+        app:queryHint="search"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/property_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="140dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="54dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btProperties"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Props"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btInspections"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="Insps"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btProperties" />
-
-    <Button
-        android:id="@+id/btReports"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="Reps"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btProfile" />
-
-    <Button
-        android:id="@+id/btProfile"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="PROF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="181dp"
+        app:layout_constraintBottom_toBottomOf="@+id/property_list"
+        app:layout_constraintEnd_toStartOf="@+id/floating_add"
+        app:layout_constraintStart_toStartOf="@+id/property_list">
 
-    <Button
-        android:id="@+id/btCreateInspection"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_create_inspection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:focusable="true"
+            android:src="@drawable/ic_inspection_white"
+            android:visibility="invisible"
+            app:backgroundTint="#EF7667" />
+
+        <TextView
+            android:id="@+id/text_create_inspection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="20dp"
+            android:paddingEnd="60dp"
+            android:shadowColor="@color/design_default_color_on_secondary"
+            android:text="New Inspection"
+            android:textColor="@color/colorPrimaryDark"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="70dp"
-        android:text="Create Inspection"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="268dp"
+        app:layout_constraintBottom_toTopOf="@+id/floating_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btAddProperty" />
+        app:layout_constraintStart_toStartOf="@+id/property_list">
 
-    <Button
-        android:id="@+id/btAddProperty"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_add_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:focusable="true"
+            android:src="@drawable/ic_properties_white"
+            android:visibility="invisible"
+            app:backgroundTint="#EF7667" />
+
+        <TextView
+            android:id="@+id/text_add_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="16dp"
+            android:paddingEnd="60dp"
+            android:shadowColor="@color/design_default_color_on_secondary"
+            android:text="Add Property"
+            android:textColor="@color/colorPrimaryDark"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="70dp"
-        android:text="Add Property"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:focusable="true"
+        app:backgroundTint="#EF7667"
+        app:layout_constraintBottom_toBottomOf="@+id/property_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_fab_plus" />
+<!--    <Button-->
+<!--        android:id="@+id/btProperties"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="Props"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btInspections"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="Insps"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/btProperties" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btReports"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="100dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="Reps"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btProfile" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btProfile"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="PROF"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btCreateInspection"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:layout_marginBottom="70dp"-->
+<!--        android:text="Create Inspection"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/btAddProperty" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btAddProperty"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginBottom="70dp"-->
+<!--        android:text="Add Property"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Main content -->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/design_default_color_background"
+            app:itemTextColor="@color/colorPrimary"
+            app:menu="@menu/bottom_nav_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
