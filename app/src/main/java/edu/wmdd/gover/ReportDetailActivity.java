@@ -51,9 +51,6 @@ public class ReportDetailActivity extends AppCompatActivity {
     Bitmap myBitmap;
     String encodedImg;
     Bitmap decodeImg;
-
-
-
     Button btReport;
     Button btAddSection;
     Button btnAddSignature;
@@ -91,7 +88,6 @@ public class ReportDetailActivity extends AppCompatActivity {
             }
         });
 
-
         Intent intent = getIntent();
         if (intent.getExtras().containsKey("reportId")) {
             this.reportId = intent.getIntExtra("reportId", 0);
@@ -104,7 +100,6 @@ public class ReportDetailActivity extends AppCompatActivity {
                 fetchInspection(inspectionId);
             }
         }
-
 
         //signature
         btnAddSignature = findViewById(R.id.btSign);
@@ -123,8 +118,6 @@ public class ReportDetailActivity extends AppCompatActivity {
                     @Override
                     public void onStartSigning() {
                         //Event triggered when the pad is touched
-
-
                     }
 
                     @Override
@@ -160,12 +153,7 @@ public class ReportDetailActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-
-        //=====
     }
-
-
-
 
     private void fetchReport(Integer reportId) {
 
