@@ -193,7 +193,7 @@ public class LoginActivity extends Activity {
                         } else {
                             Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         }
-                        Log.d("Volley", error.networkResponse.toString());
+                        Log.d("Volley", error.toString());
                     }
                 }) {
             @Override
