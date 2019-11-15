@@ -57,6 +57,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
     Button btSaveInspection;
     Button btReport;
     Button btAddSection;
+    Button btAddTenant;
     Button btnAddSignature;
     final Context context = this;
 
@@ -92,6 +93,14 @@ public class InspectionDetailActivity extends AppCompatActivity {
                 intent.putExtra("sectionId", section.getId());
                 intent.putExtra("sectionName", section.getName());
                 startActivity(intent);
+            }
+        });
+
+        btAddTenant = (Button) findViewById(R.id.btAddTenant);
+        btAddTenant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTenant();
             }
         });
 
@@ -313,6 +322,12 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     private void addSection() {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
+        intent.putExtra("inspectionId", inspectionId);
+        startActivity(intent);
+    }
+
+    private void addTenant() {
+        Intent intent = new Intent(InspectionDetailActivity.this, TenantDetailActivity.class);
         intent.putExtra("inspectionId", inspectionId);
         startActivity(intent);
     }

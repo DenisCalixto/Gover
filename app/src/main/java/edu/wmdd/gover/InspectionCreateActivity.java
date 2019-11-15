@@ -64,7 +64,7 @@ public class InspectionCreateActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Position " + position, Toast.LENGTH_SHORT).show();
                 //Log.d("Volley", propertyList.get(position).notes);
                 Intent intent = new Intent(InspectionCreateActivity.this, InspectionDetailActivity.class);
-                intent.putExtra("property_id", propertyList.get(position).id);
+                intent.putExtra("property_id", propertyList.get(position).getId());
                 startActivity(intent);
             };
 

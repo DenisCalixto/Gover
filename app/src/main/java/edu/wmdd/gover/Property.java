@@ -2,9 +2,9 @@ package edu.wmdd.gover;
 
 public class Property {
 
-    public String name;
-    public String notes;
-    public int id;
+    private String name;
+    private String notes;
+    private int id;
     private String image_url;
 
     public Property() {
@@ -28,7 +28,7 @@ public class Property {
     }
 
     public String getImage_url() {
-        return image_url;
+        return image_url.replace("http:", "https:");
     }
 
     public int getId() {
@@ -40,7 +40,7 @@ public class Property {
     }
 
     public void setImage_url(String image_url) {
-        this.image_url = image_url;
+        this.image_url = image_url.replace("http:", "https:");
     }
 
 }

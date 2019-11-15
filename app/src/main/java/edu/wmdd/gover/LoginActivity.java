@@ -122,6 +122,9 @@ public class LoginActivity extends Activity {
 
 
 
+//        txtUsername.setHint(getString(R.string.username_hint));
+//        txtPassword.setHint(getString(R.string.password_hint));
+
 //        btnGoi.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -249,7 +252,7 @@ public class LoginActivity extends Activity {
                         } else {
                             Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         }
-                        Log.d("Volley", error.networkResponse.toString());
+                        Log.d("Volley", error.toString());
                     }
                 }) {
             @Override
