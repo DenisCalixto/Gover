@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReportDetailActivity"></activity>
+        <activity android:name=".TenantDetailActivity"></activity>
+        <activity android:name=".ReportDetailActivity" />
         <activity android:name=".InspectionItemDetailActivity" />
         <activity android:name=".InspectionSectionDetailActivity" />
         <activity android:name=".InspectionCreateActivity" />
