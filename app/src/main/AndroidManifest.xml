@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".TenantDetailActivity"></activity>
         <activity
             android:name=".bottom_navigation"
             android:label="@string/title_activity_bottom_navigation"></activity>
@@ -31,15 +32,6 @@
         <activity android:name=".PropertyDetailActivity" />
         <activity android:name=".InspectionListActivity" />
         <activity android:name=".PropertyOptionActivity" />
-        <activity android:name=".MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity android:name=".PropertyActivity" />
         <activity
             android:name=".LoginActivity"

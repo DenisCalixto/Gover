@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Inspection {
 
-    public String inspector_name;
-    public Date inspection_date;
-    public String property_name;
-    public String notes;
-    public int id;
+    private String inspector_name;
+    private Date inspection_date;
+    private String property_name;
+    private String notes;
+    private int id;
     private String image_url;
 
     public Inspection() {
@@ -48,7 +48,7 @@ public class Inspection {
     }
 
     public String getImage_url() {
-        return image_url;
+        return image_url.replace("http:", "https:");
     }
 
     public int getId() {
@@ -60,7 +60,7 @@ public class Inspection {
     }
 
     public void setImage_url(String image_url) {
-        this.image_url = image_url;
+        this.image_url = image_url.replace("http:", "https:");
     }
 
 }
