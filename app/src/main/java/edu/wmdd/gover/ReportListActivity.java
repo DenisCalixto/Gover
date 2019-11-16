@@ -98,9 +98,9 @@ public class ReportListActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         Report report = new Report();
-                        report.setPropertyName(jsonObject.getJSONObject("inspection")
+                        report.setPropertyName(jsonObject.getJSONObject("inspection_obj")
                                                 .getJSONObject("inspected_property")
-                                                .getString("name"));
+                                                .getString("address"));
                         if (jsonObject.getString("created") != "") {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                             try {
