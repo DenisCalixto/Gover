@@ -114,8 +114,9 @@ public class ReportListActivity extends AppCompatActivity {
                         report.setId(jsonObject.getInt("id"));
 
                         reportList.add(report);
+                        //Log.d("ReportListActivity", reportList.get(reportList.size()-1).getPropertyName());
                     } catch (JSONException e) {
-                        Log.e("Volley", e.toString());
+                        Log.e("ReportListActivity", e.toString());
                         e.printStackTrace();
                         progressDialog.dismiss();
                     }
