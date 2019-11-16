@@ -313,7 +313,7 @@ public class PropertyActivity extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 Property property = new Property();
-                                property.setName(jsonObject.getString("name"));
+                                property.setAddress(jsonObject.getString("address"));
                                 property.setNotes(jsonObject.getString("notes"));
                                 property.setId(jsonObject.getInt("id"));
                                 property.setImage_url(jsonObject.getString("thumbnail"));
