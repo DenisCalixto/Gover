@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/btProperties"
-        android:icon="@drawable/ic_properties_grey"
+        android:icon="@drawable/ic_properties"
         android:state_checked="true"
         android:title="@string/title_property_list" />
 

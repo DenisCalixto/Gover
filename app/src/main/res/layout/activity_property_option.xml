@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PropertyOptionActivity">
+    tools:context=".PropertyOptionActivity"
+    android:background="@color/colorWhite">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:text="Add Property"
-        android:textSize="36sp"
+        android:text="@string/type_property"
+        android:textSize="34sp"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,44 +23,84 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="Select a property type"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btRealState"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_marginTop="50dp"
+        android:backgroundTint="@color/colorWhite"
+        android:drawableStart="@drawable/ic_type_realestate"
+        android:padding="30dp"
         android:text="@string/property_type_realstate"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        style="?android:attr/borderlessButtonStyle" />
 
-    <Button
-        android:id="@+id/btVehicle"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/property_type_vehicle"
-        android:textSize="18sp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/btVehicle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btRealState" />
 
     <Button
+        android:id="@+id/btVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="30dp"
+        android:backgroundTint="@color/colorWhite"
+        android:layout_marginTop="50dp"
+        android:textAlignment="textStart"
+        android:text="@string/property_type_vehicle"
+        android:textSize="18sp"
+        android:drawableStart="@drawable/ic_type_vehicle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btRealState"
+        style="?android:attr/borderlessButtonStyle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/btEquipment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btVehicle" />
+
+    <Button
         android:id="@+id/btEquipment"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
+        android:drawableStart="@drawable/ic_type_equipment"
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/colorWhite"
+        android:textAlignment="textStart"
+        android:layout_height="100dp"
+        android:padding="30dp"
         android:layout_marginTop="50dp"
         android:text="@string/property_type_equipment"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btVehicle" />
+        app:layout_constraintTop_toBottomOf="@+id/btVehicle"
+        style="?android:attr/borderlessButtonStyle" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
