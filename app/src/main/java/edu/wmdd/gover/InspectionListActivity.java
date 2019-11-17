@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class InspectionListActivity extends AppCompatActivity {
         private List<Inspection> inspectionList;
         private RecyclerView.Adapter adapter;
 
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -74,6 +76,9 @@ public class InspectionListActivity extends AppCompatActivity {
             mList.setLayoutManager(linearLayoutManager);
             mList.addItemDecoration(dividerItemDecoration);
             mList.setAdapter(adapter);
+
+            SearchView searchViewInspections = findViewById(R.id.searchViewInspections);
+            searchViewInspections.setQueryHint(getString(R.string.inspections_search_hint));
 
             //Start Bottom Nav
 
