@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Gover</string>
-    <string name="login">Log in</string>
+    <string name="login">login</string>
     <string name="auth0_domain">Log in</string>
     <string name="api_property_url">https://greenfillproject.com/api/property/</string>
     <string name="api_inspection_url">https://greenfillproject.com/api/inspection/</string>
@@ -40,4 +40,8 @@
     <string name="create_inspection">Create Inspection</string>
     <string name="select_property">Select property</string>
     <string name="inspection_add_property">Add New Property</string>
+    <string name="add_tenant">Add Tenant Information</string>
+    <string name="add_section">Add Section</string>
+    <string name="save_inspection">Save Inspection</string>
+    <string name="generate_report">Report</string>
 </resources>
