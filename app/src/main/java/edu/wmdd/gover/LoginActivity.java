@@ -82,6 +82,15 @@ public class LoginActivity extends Activity {
 
             }else if(!fmc.hasEnrolledFingerprints()){
                 status.setText("No fingerprint currently enrolled");
+                Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
+                loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        username = txtUsername.getText().toString().trim();
+                        login(username, txtPassword.getText().toString().trim());
+                    }
+                });
+
             }else{
                 status.setText("fingerprint is ready");
 
