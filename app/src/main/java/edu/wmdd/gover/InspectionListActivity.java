@@ -123,11 +123,9 @@ public class InspectionListActivity extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            Log.d("Json", jsonObject.getJSONObject("inspector").toString());
+                            Log.d("InspectionListActivity", response.getJSONObject(i).toString());
                             Inspection inspection = new Inspection();
-                            inspection.setInspectorName(jsonObject.getJSONObject("inspector_obj").getString("first_name") + " " +
-                                                        jsonObject.getJSONObject("inspector_obj").getString("last_name"));
-                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property_obj").getString("name"));
+                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property_obj").getString("address"));
                             if (jsonObject.getString("inspection_date") != "") {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 try {
