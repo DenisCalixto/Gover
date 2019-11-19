@@ -2,9 +2,13 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,11 +31,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +55,20 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private InspectionSectionListAdapter sectionsListAdapter;
 
     Button btSaveInspection;
+    Button btReport;
     Button btAddSection;
+    Button btAddTenant;
+    Button btnAddSignature;
+    final Context context = this;
+
+    //signature instances
+//    private SignaturePad mSignaturePad;
+//    private Button mClearButton;
+//    private Button mSaveButton;
+
+    String encodedSignature;
+
+    //================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +96,14 @@ public class InspectionDetailActivity extends AppCompatActivity {
             }
         });
 
+        btAddTenant = (Button) findViewById(R.id.btAddTenant);
+        btAddTenant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTenant();
+            }
+        });
+
         btAddSection = (Button) findViewById(R.id.btAddSection);
         btAddSection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +112,7 @@ public class InspectionDetailActivity extends AppCompatActivity {
             }
         });
 
-        btSaveInspection = (Button) findViewById(R.id.btSaveInspection);
+        btSaveInspection = (Button) findViewById(R.id.btReport);
         btSaveInspection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,8 +120,27 @@ public class InspectionDetailActivity extends AppCompatActivity {
             }
         });
 
+
+
+        btReport = (Button) findViewById(R.id.btReport);
+        btReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InspectionDetailActivity.this, ReportDetailActivity.class);
+                intent.putExtra("inspectionId", inspectionId);
+                startActivity(intent);
+            }
+        });
+
         manageScreenState();
     }
+//    public void bitmapToBase64() {
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        SignatureBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//        byte[] byteArray = byteArrayOutputStream .toByteArray();
+//        encodedSignature = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//        Log.d("base64", Base64.encodeToString(byteArray, Base64.DEFAULT));
+//    }
 
     //check if an inspection was sent (from Inspection List) or a property (from Create Inspection property list)
     private void manageScreenState() {
@@ -276,6 +322,12 @@ public class InspectionDetailActivity extends AppCompatActivity {
 
     private void addSection() {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
+        intent.putExtra("inspectionId", inspectionId);
+        startActivity(intent);
+    }
+
+    private void addTenant() {
+        Intent intent = new Intent(InspectionDetailActivity.this, TenantDetailActivity.class);
         intent.putExtra("inspectionId", inspectionId);
         startActivity(intent);
     }

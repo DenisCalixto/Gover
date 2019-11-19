@@ -62,7 +62,14 @@ public class ReportListActivity extends AppCompatActivity {
         mList = findViewById(R.id.report_list);
 
         reportList = new ArrayList<>();
-        adapter = new ReportAdapter(getApplicationContext(),reportList);
+
+        RecyclerViewClickListener listener = (view, position) -> {
+            Intent intent = new Intent(ReportListActivity.this, ReportDetailActivity.class);
+            intent.putExtra("reportId", reportList.get(position).getId());
+            startActivity(intent);
+        };
+        
+        adapter = new ReportAdapter(getApplicationContext(),reportList, listener);
 
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

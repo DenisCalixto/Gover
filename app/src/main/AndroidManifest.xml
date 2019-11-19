@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.wmdd.gover">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".InspectionItemDetailActivity"></activity>
+        <activity android:name=".TenantDetailActivity"></activity>
+        <activity
+            android:name=".bottom_navigation"
+            android:label="@string/title_activity_bottom_navigation"></activity>
+        <activity android:name=".ReportDetailActivity"></activity>
+        <activity android:name=".InspectionItemDetailActivity" />
         <activity android:name=".InspectionSectionDetailActivity" />
         <activity android:name=".InspectionCreateActivity" />
         <activity android:name=".InspectionDetailActivity" />
@@ -23,15 +32,6 @@
         <activity android:name=".PropertyDetailActivity" />
         <activity android:name=".InspectionListActivity" />
         <activity android:name=".PropertyOptionActivity" />
-        <activity android:name=".MainActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity android:name=".PropertyActivity" />
         <activity
             android:name=".LoginActivity"
@@ -53,6 +53,16 @@
                     android:scheme="demo" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

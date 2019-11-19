@@ -13,17 +13,19 @@ import java.util.List;
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
 
     private Context context;
+    private RecyclerViewClickListener mListener;
     private List<Report> list;
 
-    public ReportAdapter(Context context, List<Report> list) {
+    public ReportAdapter(Context context, List<Report> list, RecyclerViewClickListener listener) {
         this.context = context;
         this.list = list;
+        mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.report_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, mListener);
     }
 
     @Override
@@ -43,14 +45,24 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textPropertyName, textReportDate;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ViewHolder(View itemView) {
+        public TextView textPropertyName, textReportDate;
+        private RecyclerViewClickListener mListener;
+
+        public ViewHolder(View itemView, RecyclerViewClickListener listener) {
             super(itemView);
 
             textPropertyName = itemView.findViewById(R.id.property_name);
             textReportDate = itemView.findViewById(R.id.report_date);
+
+            mListener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
         }
     }
 
