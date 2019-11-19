@@ -19,14 +19,18 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:text="Section Name"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            />
 
         <ListView
             android:id="@+id/itemsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"></ListView>
+            android:layout_marginBottom="10dp">
+        </ListView>
 
     </LinearLayout>
 

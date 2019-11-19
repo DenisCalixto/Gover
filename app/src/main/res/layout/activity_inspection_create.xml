@@ -5,7 +5,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InspectionCreateActivity">
+    tools:context=".InspectionCreateActivity"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/create_inspection"
+        android:textSize="34sp"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/select_property"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/property_list"
@@ -14,6 +38,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/inspection_add_property">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/inspection_add_property"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:text="@string/inspection_add_property"
+        android:textColor="@color/colorGrey"
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawableStart="@drawable/ic_round_add"
+        android:background="@color/colorWhite"
+        android:layout_marginStart="30dp"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        style="?android:attr/borderlessButtonStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         Property property = list.get(position);
 
         holder.textNotes.setText(property.getNotes());
-        holder.textName.setText(String.valueOf(property.getName()));
+        holder.textName.setText(String.valueOf(property.getAddress()));
         String url = String.valueOf(property.getImage_url());
 
         if (url != "" && url != null && !url.equals("null")) {

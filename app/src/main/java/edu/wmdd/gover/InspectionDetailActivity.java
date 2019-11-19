@@ -112,15 +112,13 @@ public class InspectionDetailActivity extends AppCompatActivity {
             }
         });
 
-        btSaveInspection = (Button) findViewById(R.id.btReport);
+        btSaveInspection = (Button) findViewById(R.id.btSaveInspection);
         btSaveInspection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveInspection();
             }
         });
-
-
 
         btReport = (Button) findViewById(R.id.btReport);
         btReport.setOnClickListener(new View.OnClickListener() {
@@ -414,7 +412,9 @@ public class InspectionDetailActivity extends AppCompatActivity {
     }
 
     private void saveInspection() {
-
+        Toast.makeText(InspectionDetailActivity.this, "Inspection saved!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(InspectionDetailActivity.this, PropertyActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -4,13 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -28,6 +31,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +53,7 @@ public class ReportListActivity extends AppCompatActivity {
     private DividerItemDecoration dividerItemDecoration;
     private List<Report> reportList;
     private RecyclerView.Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +85,38 @@ public class ReportListActivity extends AppCompatActivity {
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
-        EditText txtPropertySearch = findViewById(R.id.txtPropertySearch);
-        txtPropertySearch.setHint(getString(R.string.property_search_hint));
+        SearchView searchViewInspections = findViewById(R.id.searchViewReports);
+        searchViewInspections.setQueryHint(getString(R.string.reports_search_hint));
+
+//        EditText txtPropertySearch = findViewById(R.id.txtPropertySearch);
+//        txtPropertySearch.setHint(getString(R.string.property_search_hint));
+
+        //Start Bottom Nav
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if( item.getItemId() == R.id.btProperties){
+                    Intent intent = new Intent(ReportListActivity.this, PropertyActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btInspections){
+                    Intent intent = new Intent(ReportListActivity.this, InspectionListActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btReports){
+                    Intent intent = new Intent(ReportListActivity.this, ReportListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(ReportListActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
+//End Bottom Nav
 
         getData();
     }
@@ -98,9 +133,9 @@ public class ReportListActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
                         Report report = new Report();
-                        report.setPropertyName(jsonObject.getJSONObject("inspection")
+                        report.setPropertyName(jsonObject.getJSONObject("inspection_obj")
                                                 .getJSONObject("inspected_property")
-                                                .getString("name"));
+                                                .getString("address"));
                         if (jsonObject.getString("created") != "") {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                             try {
@@ -115,7 +150,7 @@ public class ReportListActivity extends AppCompatActivity {
 
                         reportList.add(report);
                     } catch (JSONException e) {
-                        Log.e("Volley", e.toString());
+                        Log.e("ReportListActivity", e.toString());
                         e.printStackTrace();
                         progressDialog.dismiss();
                     }
