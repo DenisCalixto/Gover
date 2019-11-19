@@ -1,11 +1,16 @@
 package edu.wmdd.gover;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -13,9 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -46,6 +54,8 @@ public class LoginActivity extends Activity {
     ImageView imageView;
     Bitmap bitmap;
 
+    TextView status;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +67,69 @@ public class LoginActivity extends Activity {
 //        btnGoi = (Button) findViewById(R.id.button);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
-        loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username = txtUsername.getText().toString().trim();
-                login(username, txtPassword.getText().toString().trim());
+
+        //Fingerprint
+
+        status = findViewById(R.id.tv1);
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_BIOMETRIC) != PackageManager.PERMISSION_GRANTED){
+            status.setText("Permission not granted");
+        }else{
+            FingerprintManagerCompat fmc= FingerprintManagerCompat.from(this);
+
+            if (!fmc.isHardwareDetected()){
+                status.setText("No fingerprint sensor hardware found");
+
+            }else if(!fmc.hasEnrolledFingerprints()){
+                status.setText("No fingerprint currently enrolled");
+                Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
+                loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        username = txtUsername.getText().toString().trim();
+                        login(username, txtPassword.getText().toString().trim());
+                    }
+                });
+
+            }else{
+                status.setText("fingerprint is ready");
+
+                //set up authentication dialog
+
+                BiometricPrompt biometricPrompt = new BiometricPrompt
+                        .Builder(this)
+                        .setTitle("Biometric Authetication")
+                        .setSubtitle("Authenticate to continue")
+                        .setDescription("Fingerprinting in biometric")
+                        .setNegativeButton("Cancel", this.getMainExecutor(),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        status.setText("Fingerprint cancelled");
+                                        Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
+                                        loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                username = txtUsername.getText().toString().trim();
+                                                login(username, txtPassword.getText().toString().trim());
+                                            }
+                                        });
+                                    }
+                                })
+                        .build();
+                //Authenticate with callback functions
+                biometricPrompt.authenticate(getCancellationSignal(), getMainExecutor(), getAuthenticationCallback());
             }
-        });
+        }
+
+
+        //===================
+
+
+
+
+
+
 
 //        txtUsername.setHint(getString(R.string.username_hint));
 //        txtPassword.setHint(getString(R.string.password_hint));
@@ -264,4 +329,48 @@ public class LoginActivity extends Activity {
         requestQueue.add(jsonRequest);
 
     }
+
+
+    //biometric method
+    private BiometricPrompt.AuthenticationCallback
+    getAuthenticationCallback(){
+        return new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, CharSequence errString) {
+                status.setText(status.getText() + "Fingerprint error" + errString);
+                super.onAuthenticationError(errorCode, errString);
+            }
+
+            @Override
+            public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
+                super.onAuthenticationHelp(helpCode, helpString);
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+
+                super.onAuthenticationSucceeded(result);
+                status.setText(status.getText() + "Fingerprint succeed");
+                login("chan", "Gover!123");
+
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        };
+    }
+    private CancellationSignal cancellationSignal;
+    private CancellationSignal getCancellationSignal(){
+        cancellationSignal = new CancellationSignal();
+        cancellationSignal.setOnCancelListener(new CancellationSignal.OnCancelListener() {
+            @Override
+            public void onCancel() {
+                status.setText(status.getText() + "Fingerprint cancelled by signal");
+            }
+        });
+        return cancellationSignal;
+    }
+
 }
