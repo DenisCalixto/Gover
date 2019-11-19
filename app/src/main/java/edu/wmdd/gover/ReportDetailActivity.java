@@ -141,6 +141,9 @@ public class ReportDetailActivity extends AppCompatActivity {
                         SignatureBitmap = mSignaturePad.getSignatureBitmap();
 //                        bitmapToBase64();
 //                        base64ToImage();
+                        ImageView signatureImg = findViewById(R.id.signImage);
+                        signatureImg.setImageBitmap(SignatureBitmap);
+                        dialog.dismiss();
                     }
                 });
                 mClearButton.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +154,9 @@ public class ReportDetailActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
+
             }
+
         });
     }
 
