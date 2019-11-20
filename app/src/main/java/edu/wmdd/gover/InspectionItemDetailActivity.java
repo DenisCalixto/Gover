@@ -213,13 +213,33 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
 
+        if (requestCode == REQ_CODE_SPEECH && resultCode == RESULT_OK && data != null){
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            editTextOnSpeak = dialog.findViewById(R.id.editText);
+            editTextOnSpeak.append(result.get(0));
 
-            File imgFile = new File(currentPhotoPath);
-            if (imgFile.exists()) {
-                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                propImage.setImageBitmap(myBitmap);
+//            notesEdit.setHint(editTextOnSpeak.toString());
+
+            Button btnSaveSpeech = dialog.findViewById(R.id.saveSpeech_button);
+            btnSaveSpeech.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                        notesEdit.setText(editTextOnSpeak.getText());
+                    String testEditText = editTextOnSpeak.getText().toString();
+                    Log.e("test", testEditText);
+                    notesEdit.append(testEditText);
+                    dialog.dismiss();
+                }
+            });
+        }
+        else {
+            if (requestCode == 1) {
+                File imgFile = new File(currentPhotoPath);
+                if (imgFile.exists()) {
+                    myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    propImage.setImageBitmap(myBitmap);
+                }
             }
         }
     }
@@ -385,31 +405,11 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
 
         }
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_CODE_SPEECH && resultCode == RESULT_OK && data != null){
-            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            editTextOnSpeak = dialog.findViewById(R.id.editText);
-            editTextOnSpeak.append(result.get(0));
-
-//            notesEdit.setHint(editTextOnSpeak.toString());
-
-                            Button btnSaveSpeech = dialog.findViewById(R.id.saveSpeech_button);
-                btnSaveSpeech.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        notesEdit.setText(editTextOnSpeak.getText());
-                        String testEditText = editTextOnSpeak.getText().toString();
-                        Log.e("test", testEditText);
-                        notesEdit.append(testEditText);
-                        dialog.dismiss();
-                    }
-                });
-
-
-        }
-    }
-    //==========================
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+//    //==========================
 }
