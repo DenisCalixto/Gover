@@ -4,34 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportListActivity">
+    tools:context=".ReportListActivity"
+    android:background="@color/colorWhite">
 
-    <EditText
-        android:id="@+id/txtPropertySearch"
-        android:layout_width="316dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+<!--    <EditText-->
+<!--        android:id="@+id/txtPropertySearch"-->
+<!--        android:layout_width="316dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="textPersonName"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <SearchView
+        android:id="@+id/searchViewReports"
+        style="@android:style/Widget.Material.Light.SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/background"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btSignedReports"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:defaultQueryHint="search"
+        app:queryHint="search" />
 
     <Button
         android:id="@+id/btSignedReports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:background="@drawable/btngrey"
+        android:textColor="@color/colorWhite"
         android:text="Signed"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPropertySearch" />
+        app:layout_constraintTop_toBottomOf="@+id/searchViewReports" />
 
     <Button
         android:id="@+id/btAllReports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btnsalmon"
         android:text="All"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toStartOf="@+id/btSignedReports"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btSignedReports" />
@@ -40,6 +63,8 @@
         android:id="@+id/btPendingReports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btngrey"
+        android:textColor="@color/colorWhite"
         android:text="Pending"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btSignedReports"
@@ -53,6 +78,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSignedReports"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/btSignedReports"
+        android:layout_marginBottom="54dp">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Main content -->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/design_default_color_background"
+            app:itemIconTint="@color/colorPrimary"
+            app:itemTextColor="@color/colorPrimary"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_nav_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

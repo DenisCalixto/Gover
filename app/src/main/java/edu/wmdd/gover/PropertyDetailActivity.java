@@ -92,12 +92,12 @@ public class PropertyDetailActivity extends AppCompatActivity {
         notesEdit = findViewById(R.id.notes);
         propImage = findViewById(R.id.propertyImage);
 
-        addressEdit.setHint(getString(R.string.property_detail_address_hint));
-        zipEdit.setHint(getString(R.string.property_detail_zip_hint));
-        unitEdit.setHint(getString(R.string.property_detail_unit_hint));
-        ownerEdit.setHint(getString(R.string.property_detail_owner_hint));
-        contactEdit.setHint(getString(R.string.property_detail_contact_hint));
-        notesEdit.setHint(getString(R.string.property_detail_notes_hint));
+//        addressEdit.setHint(getString(R.string.property_detail_address_hint));
+//        zipEdit.setHint(getString(R.string.property_detail_zip_hint));
+//        unitEdit.setHint(getString(R.string.property_detail_unit_hint));
+//        ownerEdit.setHint(getString(R.string.property_detail_owner_hint));
+//        contactEdit.setHint(getString(R.string.property_detail_contact_hint));
+//        notesEdit.setHint(getString(R.string.property_detail_notes_hint));
 
 
         Button btTakepic = findViewById(R.id.takePicButton);

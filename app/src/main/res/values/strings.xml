@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Gover</string>
-    <string name="login">Log in</string>
+    <string name="login">login</string>
     <string name="auth0_domain">Log in</string>
     <string name="api_property_url">https://greenfillproject.com/api/property/</string>
     <string name="api_inspection_url">https://greenfillproject.com/api/inspection/</string>
@@ -12,7 +12,7 @@
     <string name="api_user_url">https://greenfillproject.com/api/users/</string>
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>
-    <string name="property_type_realstate">REAL STATE</string>
+    <string name="property_type_realstate">REAL ESTATE</string>
     <string name="property_type_vehicle">VEHICLE</string>
     <string name="property_type_equipment">EQUIPMENT</string>
     <string name="property_detail_address_hint">address</string>
@@ -21,7 +21,9 @@
     <string name="property_detail_owner_hint">owner</string>
     <string name="property_detail_contact_hint">contact</string>
     <string name="property_detail_notes_hint">notes</string>
-    <string name="property_search_hint">Search Properties</string>
+    <string name="property_search_hint">Search properties</string>
+    <string name="inspections_search_hint">Search inspections</string>
+    <string name="reports_search_hint">Search reports</string>
     <string name="inspection_item_status_damaged">Damaged</string>
     <string name="inspection_item_status_scratched">Scratched</string>
     <string name="inspection_item_status_missing">Missing</string>
@@ -30,4 +32,25 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_property_list">Properties</string>
+    <string name="title_inspection_list">Inspections</string>
+    <string name="title_report_list">Reports</string>
+    <string name="title_profile">Profile</string>
+    <string name="type_property">Add Property</string>
+    <string name="create_inspection">Create Inspection</string>
+    <string name="select_property">Select property</string>
+    <string name="inspection_add_property">Add New Property</string>
+    <string name="add_tenant">Add Tenant Information</string>
+    <string name="add_section">Add Section</string>
+    <string name="save_inspection">Save Inspection</string>
+    <string name="generate_report">Report</string>
+    <string name="hint_owner">Owner</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_zipcode">Zipcode</string>
+    <string name="hint_contact">Contact</string>
+    <string name="hint_unit">Unit</string>
+    <string name="hint_notes">Notes</string>
+    <string name="property_photo">Property Cover Photo</string>
+    <string name="save_property">Save Property</string>
+    <string name="take_photo">Take Photo</string>
 </resources>
