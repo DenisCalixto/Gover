@@ -22,14 +22,6 @@
         android:layout_margin="8dp">
 
         <TextView
-            android:id="@+id/inspector_name"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inspector"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/inspector_date"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"

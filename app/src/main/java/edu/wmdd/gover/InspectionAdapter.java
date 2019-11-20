@@ -34,7 +34,6 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
         Inspection inspection = list.get(position);
 
         holder.textPropertyName.setText(inspection.getPropertyName());
-        holder.textInspectorName.setText(inspection.getInspectorName());
         if (inspection.getInspectionDate() != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String strDate = formatter.format(inspection.getInspectionDate());
@@ -59,14 +58,13 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textPropertyName, textInspectorName, textInspectionDate;
+        public TextView textPropertyName, textInspectionDate;
         public NetworkImageView imageThumbnail;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             textPropertyName = itemView.findViewById(R.id.property_name);
-            textInspectorName = itemView.findViewById(R.id.inspector_name);
             textInspectionDate = itemView.findViewById(R.id.inspector_date);
             imageThumbnail = itemView.findViewById(R.id.property_thumbnail);
         }

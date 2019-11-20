@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,6 +30,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +52,7 @@ public class InspectionListActivity extends AppCompatActivity {
         private DividerItemDecoration dividerItemDecoration;
         private List<Inspection> inspectionList;
         private RecyclerView.Adapter adapter;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,38 @@ public class InspectionListActivity extends AppCompatActivity {
             mList.addItemDecoration(dividerItemDecoration);
             mList.setAdapter(adapter);
 
+            SearchView searchViewInspections = findViewById(R.id.searchViewInspections);
+            searchViewInspections.setQueryHint(getString(R.string.inspections_search_hint));
+
+            //Start Bottom Nav
+
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_inspection);
+//            bottomNavigationView.setSelectedItemId(R.id.btInspections);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    if ( item.getItemId() == R.id.btInspections){
+                        Intent intent = new Intent(InspectionListActivity.this, InspectionListActivity.class);
+                        startActivity(intent);
+                    }
+                    else if ( item.getItemId() == R.id.btProperties){
+                        Intent intent = new Intent(InspectionListActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                    else if( item.getItemId() == R.id.btReports){
+                        Intent intent = new Intent(InspectionListActivity.this, ReportListActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(InspectionListActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                    }
+                    return false;
+                }
+            });
+
+//End Bottom Nav
+
             getData();
         }
 
@@ -86,11 +123,9 @@ public class InspectionListActivity extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            Log.d("Json", jsonObject.getJSONObject("inspector").toString());
+                            Log.d("InspectionListActivity", response.getJSONObject(i).toString());
                             Inspection inspection = new Inspection();
-                            inspection.setInspectorName(jsonObject.getJSONObject("inspector_obj").getString("first_name") + " " +
-                                                        jsonObject.getJSONObject("inspector_obj").getString("last_name"));
-                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property_obj").getString("name"));
+                            inspection.setPropertyName(jsonObject.getJSONObject("inspected_property_obj").getString("address"));
                             if (jsonObject.getString("inspection_date") != "") {
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 try {

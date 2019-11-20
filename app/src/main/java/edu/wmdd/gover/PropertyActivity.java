@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class PropertyActivity extends AppCompatActivity {
     private List<Property> propertyList;
     private RecyclerView.Adapter adapter;
 
+
     FloatingActionButton floatingAdd, floatingAddProperty, floatingCreateInspection;
     TextView textCreate, textAddProperty;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
@@ -100,6 +102,10 @@ public class PropertyActivity extends AppCompatActivity {
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setQueryHint(getString(R.string.property_search_hint));
+
+
 
 //Start Bottom Nav
 
@@ -126,7 +132,6 @@ public class PropertyActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 //End Bottom Nav
 
 //Start of Floating Action Button
@@ -313,7 +318,7 @@ public class PropertyActivity extends AppCompatActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 Property property = new Property();
-                                property.setName(jsonObject.getString("name"));
+                                property.setAddress(jsonObject.getString("address"));
                                 property.setNotes(jsonObject.getString("notes"));
                                 property.setId(jsonObject.getInt("id"));
                                 property.setImage_url(jsonObject.getString("thumbnail"));
