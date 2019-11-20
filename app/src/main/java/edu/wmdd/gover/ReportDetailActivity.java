@@ -385,9 +385,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
                 Log.d("Volley", resultResponse);
-                Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
-                startActivity(intent);
+                createReportPDF();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -446,6 +444,42 @@ public class ReportDetailActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(multipartRequest);
+
+    }
+
+    private void createReportPDF() {
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.api_report_create_pdf_url) + reportId.toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Object resultResponse = response;
+                        //Log.d("Volley", resultResponse);
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(ReportDetailActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+//                        Log.d("Volley", error.toString());
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
 
     }
 
