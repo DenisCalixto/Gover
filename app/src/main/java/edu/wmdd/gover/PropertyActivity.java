@@ -1,13 +1,18 @@
 package edu.wmdd.gover;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -77,6 +82,8 @@ public class PropertyActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+        setAnimation();
         setContentView(R.layout.property_list_activity);
 
         mList = findViewById(R.id.property_list);
@@ -88,7 +95,11 @@ public class PropertyActivity extends AppCompatActivity {
             //Log.d("Volley", propertyList.get(position).notes);
             Intent intent = new Intent(PropertyActivity.this, PropertyDetailActivity.class);
             intent.putExtra("property_id", propertyList.get(position).getId());
-            startActivity(intent);
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
+            startActivity(intent, options.toBundle());
+
+//            startActivity(intent);
         };
 
         adapter = new PropertyAdapter(getApplicationContext(), propertyList, listener);
@@ -106,28 +117,40 @@ public class PropertyActivity extends AppCompatActivity {
         searchView.setQueryHint(getString(R.string.property_search_hint));
 
 
-
 //Start Bottom Nav
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if( item.getItemId() == R.id.btProperties){
+                if (item.getItemId() == R.id.btProperties) {
                     Intent intent = new Intent(PropertyActivity.this, PropertyActivity.class);
-                    startActivity(intent);
-                }
-                else if( item.getItemId() == R.id.btInspections){
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
+                } else if (item.getItemId() == R.id.btInspections) {
                     Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
-                    startActivity(intent);
-                }
-                else if( item.getItemId() == R.id.btReports){
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
+                } else if (item.getItemId() == R.id.btReports) {
                     Intent intent = new Intent(PropertyActivity.this, ReportListActivity.class);
-                    startActivity(intent);
-                }
-                else{
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(PropertyActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
                 }
                 return false;
             }
@@ -143,11 +166,11 @@ public class PropertyActivity extends AppCompatActivity {
         textCreate = (TextView) findViewById(R.id.text_create_inspection);
         textAddProperty = (TextView) findViewById(R.id.text_add_property);
 
-        fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
 
-        rotateForward = AnimationUtils.loadAnimation(this,R.anim.rotate_forward);
-        rotateBackward = AnimationUtils.loadAnimation(this,R.anim.rotate_backward);
+        rotateForward = AnimationUtils.loadAnimation(this, R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(this, R.anim.rotate_backward);
 
         floatingAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +184,11 @@ public class PropertyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 animateFab();
                 Intent intent = new Intent(PropertyActivity.this, PropertyOptionActivity.class);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
@@ -170,7 +197,11 @@ public class PropertyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 animateFab();
                 Intent intent = new Intent(PropertyActivity.this, InspectionCreateActivity.class);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
@@ -225,10 +256,8 @@ public class PropertyActivity extends AppCompatActivity {
         getData();
     }
 
-    private void animateFab()
-    {
-        if(isOpen)
-        {
+    private void animateFab() {
+        if (isOpen) {
             floatingAdd.startAnimation(rotateForward);
             floatingAddProperty.startAnimation(fabClose);
             floatingCreateInspection.startAnimation(fabClose);
@@ -236,10 +265,8 @@ public class PropertyActivity extends AppCompatActivity {
             textAddProperty.startAnimation(fabClose);
             floatingAddProperty.setClickable(false);
             floatingCreateInspection.setClickable(false);
-            isOpen=false;
-        }
-        else
-        {
+            isOpen = false;
+        } else {
             floatingAdd.startAnimation(rotateBackward);
             floatingAddProperty.startAnimation(fabOpen);
             floatingCreateInspection.startAnimation(fabOpen);
@@ -247,7 +274,7 @@ public class PropertyActivity extends AppCompatActivity {
             textAddProperty.startAnimation(fabOpen);
             floatingAddProperty.setClickable(true);
             floatingCreateInspection.setClickable(true);
-            isOpen=true;
+            isOpen = true;
         }
     }
 
@@ -311,29 +338,29 @@ public class PropertyActivity extends AppCompatActivity {
 //        requestQueue.add(jsonArrayRequest);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getString(R.string.api_property_url), new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
 
-                                Property property = new Property();
-                                property.setAddress(jsonObject.getString("address"));
-                                property.setNotes(jsonObject.getString("notes"));
-                                property.setId(jsonObject.getInt("id"));
-                                property.setImage_url(jsonObject.getString("thumbnail"));
+                        Property property = new Property();
+                        property.setAddress(jsonObject.getString("address"));
+                        property.setNotes(jsonObject.getString("notes"));
+                        property.setId(jsonObject.getInt("id"));
+                        property.setImage_url(jsonObject.getString("thumbnail"));
 
-                                propertyList.add(property);
-                            } catch (JSONException e) {
-                                Log.e("Volley", e.toString());
-                                e.printStackTrace();
-                                progressDialog.dismiss();
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
+                        propertyList.add(property);
+                    } catch (JSONException e) {
+                        Log.e("Volley", e.toString());
+                        e.printStackTrace();
                         progressDialog.dismiss();
                     }
-                },
+                }
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -343,14 +370,28 @@ public class PropertyActivity extends AppCompatActivity {
                 }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String,String>();
-                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + Auth.accessToken);
                 return headers;
-            };
+            }
+
+            ;
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
 
+    }
+
+
+    public void setAnimation() {
+        if (Build.VERSION.SDK_INT > 20) {
+            Slide slide = new Slide();
+            slide.setSlideEdge(Gravity.LEFT);
+            slide.setDuration(400);
+            slide.setInterpolator(new DecelerateInterpolator());
+            getWindow().setExitTransition(slide);
+            getWindow().setEnterTransition(slide);
+        }
     }
 }
 
