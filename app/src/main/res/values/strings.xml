@@ -8,6 +8,7 @@
     <string name="api_inspection_template_url">https://greenfillproject.com/api/inspection_template/</string>
     <string name="api_inspection_template_item_url">https://greenfillproject.com/api/inspection_template_item/</string>
     <string name="api_report_url">https://greenfillproject.com/api/report/</string>
+    <string name="api_report_create_pdf_url">https://greenfillproject.com/api/report/create_report_file/?report_id=</string>
     <string name="api_token_url">https://greenfillproject.com/api/token/</string>
     <string name="api_user_url">https://greenfillproject.com/api/users/</string>
     <string name="username_hint">username</string>
