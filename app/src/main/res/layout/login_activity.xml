@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         app:hintEnabled="true"
-        android:hint="email"
+        android:hint="@string/username_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="password"
+        android:hint="@string/password_hint"
         android:inputType="textPassword"
         app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_pw" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot_pw"
+        style="?android:attr/borderlessButtonStyle" />
 
 <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:id="@+id/loginButton"-->
@@ -131,7 +132,17 @@
 <!--        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />-->
 
 
-<!--    <Button-->
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="120dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <!--    <Button-->
 <!--        android:id="@+id/button"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

@@ -17,9 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -42,6 +46,7 @@ public class ReportDetailActivity extends AppCompatActivity {
     Button btSign;
     Button btShareReport;
     ImageView propertyImage;
+    ImageView signImage;
 
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -71,6 +76,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         txtTenant = findViewById(R.id.tenant);
         txtNotes = findViewById(R.id.notes);
         propertyImage = findViewById(R.id.propertyImage);
+        signImage = findViewById(R.id.signImage);
 
         btSaveReport = (Button) findViewById(R.id.btSaveReport);
         btSaveReport.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +95,11 @@ public class ReportDetailActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if (intent.getExtras().containsKey("reportId")) {
-            this.reportId = intent.getIntExtra("reportId", 0);
-            if (reportId != 0) {
-                fetchReport(reportId);
-            }
-        } else {
+        this.reportId = intent.getIntExtra("reportId", 0);
+        if (reportId != 0) {
+            fetchReport(reportId);
+        }
+        else {
             this.inspectionId = intent.getIntExtra("inspectionId", 0);
             if (inspectionId != 0) {
                 fetchInspection(inspectionId);
@@ -141,6 +146,9 @@ public class ReportDetailActivity extends AppCompatActivity {
                         SignatureBitmap = mSignaturePad.getSignatureBitmap();
 //                        bitmapToBase64();
 //                        base64ToImage();
+                        ImageView signatureImg = findViewById(R.id.signImage);
+                        signatureImg.setImageBitmap(SignatureBitmap);
+                        dialog.dismiss();
                     }
                 });
                 mClearButton.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +159,9 @@ public class ReportDetailActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
+
             }
+
         });
     }
 
@@ -242,6 +252,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             JSONObject jsonObject = response;
             String tenant = jsonObject.getString("tenant_name");
             txtTenant.setText(tenant);
+            inspectionId = jsonObject.getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -307,6 +318,168 @@ public class ReportDetailActivity extends AppCompatActivity {
     }
 
     private void saveReport() {
+
+        Log.d("saveReport", this.reportId.toString());
+        Log.d("saveReport", this.inspectionId.toString());
+        JSONObject postparams = new JSONObject();
+        try {
+            if (this.reportId != 0)
+                postparams.put("id", this.reportId);
+            postparams.put("inspection", this.inspectionId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Integer method;
+        String url;
+        if (this.reportId != 0) {
+            method = Request.Method.PUT;
+            url = getString(R.string.api_report_url) + this.reportId.toString() + "/";
+        }
+        else {
+            method = Request.Method.POST;
+            url = getString(R.string.api_report_url);
+        }
+
+        // Volley post request with parameters
+        JsonObjectRequest request = new JsonObjectRequest(method, url, postparams,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject jsonObject = response;
+                            reportId = jsonObject.getInt("id");
+                            saveSignature();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Volley", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
+
+        // Volley request policy, only one time request to avoid duplicate transaction
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+
+    }
+
+    private void saveSignature() {
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.PATCH, getString(R.string.api_report_url)+ this.reportId.toString() + "/", new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                String resultResponse = new String(response.data);
+                Log.d("Volley", resultResponse);
+                createReportPDF();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message+" Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message+ " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message+" Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", reportId.toString());
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+                params.put("signature", new DataPart("report_signature.png", AppHelper.getFileDataFromDrawable(getBaseContext(), signImage.getDrawable()), "image/png"));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(multipartRequest);
+
+    }
+
+    private void createReportPDF() {
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.api_report_create_pdf_url) + reportId.toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Object resultResponse = response;
+                        //Log.d("Volley", resultResponse);
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(ReportDetailActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+//                        Log.d("Volley", error.toString());
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
 
     }
 

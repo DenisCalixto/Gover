@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Inspection {
 
-    private String inspector_name;
     private Date inspection_date;
     private String property_name;
     private String notes;
@@ -13,14 +12,6 @@ public class Inspection {
 
     public Inspection() {
 
-    }
-
-    public String getInspectorName() {
-        return inspector_name;
-    }
-
-    public void setInspectorName(String inspector_name) {
-        this.inspector_name = inspector_name;
     }
 
     public Date getInspectionDate() {
