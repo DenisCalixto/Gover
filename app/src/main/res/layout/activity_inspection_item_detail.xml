@@ -136,13 +136,14 @@
         android:id="@+id/btSaveItem"
         android:layout_width="match_parent"
         android:background="@drawable/btnsalmon"
-        android:padding="10dp"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:text="Save"
+        android:text="save item"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
