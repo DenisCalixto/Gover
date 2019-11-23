@@ -86,6 +86,7 @@ public class PropertyActivity extends AppCompatActivity {
         setAnimation();
         setContentView(R.layout.property_list_activity);
 
+
         mList = findViewById(R.id.property_list);
 
         propertyList = new ArrayList<>();
@@ -120,10 +121,16 @@ public class PropertyActivity extends AppCompatActivity {
 //Start Bottom Nav
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
+//        bottomNavigationView.getMenu().getItem(1).setChecked(false);
+//        bottomNavigationView.getMenu().getItem(2).setChecked(false);
+//        bottomNavigationView.getMenu().getItem(3).setChecked(false);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.btProperties) {
+//                    bottomNavigationView.getMenu().getItem(0).setChecked(true);
                     Intent intent = new Intent(PropertyActivity.this, PropertyActivity.class);
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);
@@ -131,6 +138,8 @@ public class PropertyActivity extends AppCompatActivity {
 
 //                    startActivity(intent);
                 } else if (item.getItemId() == R.id.btInspections) {
+//                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+//                    bottomNavigationView.getMenu().getItem(1).setChecked(true);
                     Intent intent = new Intent(PropertyActivity.this, InspectionListActivity.class);
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(PropertyActivity.this);

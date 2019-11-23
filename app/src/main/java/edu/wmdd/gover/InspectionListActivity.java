@@ -91,6 +91,11 @@ public class InspectionListActivity extends AppCompatActivity {
             //Start Bottom Nav
 
             BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_inspection);
+//            bottomNavigationView.getMenu().getItem(0).setChecked(false);
+            bottomNavigationView.getMenu().getItem(1).setChecked(true);
+//            bottomNavigationView.getMenu().getItem(2).setChecked(false);
+//            bottomNavigationView.getMenu().getItem(3).setChecked(false);
+
 //            bottomNavigationView.setSelectedItemId(R.id.btInspections);
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

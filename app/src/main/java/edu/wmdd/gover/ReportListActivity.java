@@ -106,10 +106,15 @@ public class ReportListActivity extends AppCompatActivity {
         //Start Bottom Nav
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.getMenu().getItem(0).setChecked(false);
+//        bottomNavigationView.getMenu().getItem(1).setChecked(false);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+//        bottomNavigationView.getMenu().getItem(3).setChecked(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if( item.getItemId() == R.id.btProperties){
+
                     Intent intent = new Intent(ReportListActivity.this, PropertyActivity.class);
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
@@ -118,6 +123,8 @@ public class ReportListActivity extends AppCompatActivity {
 //                    startActivity(intent);
                 }
                 else if( item.getItemId() == R.id.btInspections){
+
+
                     Intent intent = new Intent(ReportListActivity.this, InspectionListActivity.class);
 
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);

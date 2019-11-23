@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/design_default_color_background"
-            app:itemIconTint="@color/colorPrimary"
+            app:itemIconTint="@color/color_selector"
             app:itemTextColor="@color/colorPrimary"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu">
