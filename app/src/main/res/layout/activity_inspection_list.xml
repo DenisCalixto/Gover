@@ -45,13 +45,13 @@
         <!-- Main content -->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            app:labelVisibilityMode="unlabeled"
+            app:labelVisibilityMode="labeled"
             android:id="@+id/bottom_navigation_inspection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/design_default_color_background"
-            app:itemTextColor="@color/colorPrimary"
+            app:itemTextColor="@color/color_selector"
             app:itemIconTint="@color/color_selector"
             app:menu="@menu/bottom_nav_menu">
 
