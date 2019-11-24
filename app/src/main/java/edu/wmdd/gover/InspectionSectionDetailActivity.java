@@ -39,7 +39,7 @@ import java.util.Map;
 
 public class InspectionSectionDetailActivity extends AppCompatActivity {
 
-    private static Integer inspectionId = null, sectionId;
+    private Integer inspectionId = null, sectionId;
 
     private ArrayList<InspectionSectionItem> sectionsItems;
 

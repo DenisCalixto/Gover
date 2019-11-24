@@ -2,20 +2,15 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,9 +69,6 @@ public class ReportDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-
-        setAnimation();
-
         setContentView(R.layout.activity_report_detail);
 
         txtAddress = findViewById(R.id.address);
@@ -393,13 +385,7 @@ public class ReportDetailActivity extends AppCompatActivity {
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
                 Log.d("Volley", resultResponse);
-                Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
-
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportDetailActivity.this);
-                startActivity(intent, options.toBundle());
-
-//                startActivity(intent);
+                createReportPDF();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -461,18 +447,43 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
-    private void shareReport() {
+    private void createReportPDF() {
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.api_report_create_pdf_url) + reportId.toString(), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Object resultResponse = response;
+                        //Log.d("Volley", resultResponse);
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(ReportDetailActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+//                        Log.d("Volley", error.toString());
+                        Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
+                        startActivity(intent);
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization", "Bearer "+ Auth.accessToken);
+                return headers;
+            };
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsObjRequest);
 
     }
 
-    public void setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.LEFT);
-            slide.setDuration(400);
-            slide.setInterpolator(new DecelerateInterpolator());
-            getWindow().setExitTransition(slide);
-            getWindow().setEnterTransition(slide);
-        }
+    private void shareReport() {
+
     }
 }

@@ -57,8 +57,8 @@ import java.util.Map;
 
 public class InspectionItemDetailActivity extends AppCompatActivity {
 
-    private static Integer inspectionId = null, sectionId = null, sectionItemId = null, templateItemId = null;
-    private static String origin = null;
+    private Integer inspectionId = null, sectionId = null, sectionItemId = null, templateItemId = null;
+    private String origin = null;
 
     TextView sectionName, itemName;
     EditText notesEdit;
