@@ -1,5 +1,6 @@
 package edu.wmdd.gover;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,11 +36,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.Menu;
+
 public class ProfileActivity extends AppCompatActivity {
 
     EditText user_name;
     EditText user_email;
     EditText user_password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +79,37 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Start Bottom Nav
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if( item.getItemId() == R.id.btProperties){
+                    Intent intent = new Intent(ProfileActivity.this, PropertyActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btInspections){
+                    Intent intent = new Intent(ProfileActivity.this, InspectionListActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btReports){
+                    Intent intent = new Intent(ProfileActivity.this, ReportListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
+//End Bottom Nav
+
         getData();
     }
+
+
 
     private void getData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);

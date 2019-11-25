@@ -52,6 +52,6 @@
     <string name="hint_unit">Unit</string>
     <string name="hint_notes">Notes</string>
     <string name="property_photo">Property Cover Photo</string>
-    <string name="save_property">Save Property</string>
+    <string name="save_property">save property</string>
     <string name="take_photo">Take Photo</string>
 </resources>

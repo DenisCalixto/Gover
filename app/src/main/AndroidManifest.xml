@@ -20,9 +20,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".TenantDetailActivity"></activity>
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".bottom_navigation"
-            android:label="@string/title_activity_bottom_navigation"></activity>
+            android:label="@string/title_activity_bottom_navigation">
+        </activity>
         <activity android:name=".ReportDetailActivity"></activity>
         <activity android:name=".InspectionItemDetailActivity" />
         <activity android:name=".InspectionSectionDetailActivity" />
@@ -37,11 +46,11 @@
         <activity
             android:name=".LoginActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
