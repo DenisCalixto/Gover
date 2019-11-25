@@ -4,24 +4,24 @@
     <item
         android:id="@+id/btProperties"
         android:icon="@drawable/ic_properties_grey"
-        android:state_checked="true"
+        android:state_checked="false"
         android:title="@string/title_property_list" />
 
     <item
         android:id="@+id/btInspections"
-        android:state_checked="true"
+        android:state_checked="false"
         android:icon="@drawable/ic_inspection"
         android:title="@string/title_inspection_list" />
 
     <item
         android:id="@+id/btReports"
-        android:state_checked="true"
+        android:state_checked="false"
         android:icon="@drawable/ic_reports"
         android:title="@string/title_report_list" />
 
     <item
         android:id="@+id/btProfile"
-        android:state_checked="true"
+        android:state_checked="false"
         android:icon="@drawable/ic_profile"
         android:title="@string/title_profile" />
 
