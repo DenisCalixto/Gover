@@ -9,6 +9,12 @@
         <item name="android:textColorHint">@color/colorHint</item>
     </style>
 
+    <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
 
 
 <!--    <style name="AppTheme.NoActionBar">-->
