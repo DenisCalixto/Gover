@@ -11,13 +11,14 @@
         android:id="@+id/animation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_loop="false"
-        app:lottie_fileName="gover_splash_04.json" />
+        app:lottie_fileName="gover_splash_04.json"
+        app:lottie_loop="false" />
 
 <!--    <ImageView-->
 <!--        android:layout_width="wrap_content"-->
