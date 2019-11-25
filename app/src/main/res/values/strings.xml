@@ -43,8 +43,8 @@
     <string name="inspection_add_property">Add New Property</string>
     <string name="add_tenant">Add Tenant Information</string>
     <string name="add_section">Add Section</string>
-    <string name="save_inspection">Save Inspection</string>
-    <string name="generate_report">Report</string>
+    <string name="save_inspection">save inspection</string>
+    <string name="generate_report">generate report</string>
     <string name="hint_owner">Owner</string>
     <string name="hint_address">Address</string>
     <string name="hint_zipcode">Zipcode</string>

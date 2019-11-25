@@ -2,15 +2,20 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,6 +74,8 @@ public class ReportDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+        setAnimation();
+
         setContentView(R.layout.activity_report_detail);
 
         txtAddress = findViewById(R.id.address);
@@ -457,7 +464,11 @@ public class ReportDetailActivity extends AppCompatActivity {
                         //Log.d("Volley", resultResponse);
                         Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
-                        startActivity(intent);
+
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportDetailActivity.this);
+                        startActivity(intent, options.toBundle());
+
+//                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
@@ -467,7 +478,11 @@ public class ReportDetailActivity extends AppCompatActivity {
 //                        Log.d("Volley", error.toString());
                         Toast.makeText(ReportDetailActivity.this, "Report saved!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(ReportDetailActivity.this, PropertyActivity.class);
-                        startActivity(intent);
+
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportDetailActivity.this);
+                        startActivity(intent, options.toBundle());
+
+//                        startActivity(intent);
                     }
                 }) {
             @Override
@@ -485,5 +500,16 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     private void shareReport() {
 
+    }
+
+    public void setAnimation() {
+        if (Build.VERSION.SDK_INT > 20) {
+            Slide slide = new Slide();
+            slide.setSlideEdge(Gravity.LEFT);
+            slide.setDuration(400);
+            slide.setInterpolator(new DecelerateInterpolator());
+            getWindow().setExitTransition(slide);
+            getWindow().setEnterTransition(slide);
+        }
     }
 }

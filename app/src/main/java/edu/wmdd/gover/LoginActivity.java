@@ -2,6 +2,7 @@ package edu.wmdd.gover;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,12 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.provider.MediaStore;
+import android.transition.Slide;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,6 +64,9 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setAnimation();
+
         setContentView(R.layout.login_activity);
 
         final EditText txtUsername = findViewById(R.id.user_name);
@@ -105,7 +113,7 @@ public class LoginActivity extends Activity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        status.setText("Fingerprint cancelled");
+//                                        status.setText("Fingerprint cancelled");
                                         Button loginWithTokenButton = (Button) findViewById(R.id.loginButton);
                                         loginWithTokenButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -289,8 +297,22 @@ public class LoginActivity extends Activity {
             Auth.refreshToken = refresh;
             Auth.username= username;
 
-            Intent intent = new Intent(LoginActivity.this, PropertyActivity.class);
-            startActivity(intent);
+//         public void startActivity(){
+                Intent intent = new Intent(LoginActivity.this, PropertyActivity.class);
+
+//                if(Build.VERSION.SDK_INT>20){
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
+                    startActivity(intent, options.toBundle());
+//                }else{
+//                    startActivity(intent);
+//
+//                }
+//            }
+
+
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -337,7 +359,7 @@ public class LoginActivity extends Activity {
         return new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, CharSequence errString) {
-                status.setText(status.getText() + "Fingerprint error" + errString);
+//                status.setText(status.getText() + "Fingerprint error" + errString);
                 super.onAuthenticationError(errorCode, errString);
             }
 
@@ -350,7 +372,7 @@ public class LoginActivity extends Activity {
             public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
 
                 super.onAuthenticationSucceeded(result);
-                status.setText(status.getText() + "Fingerprint succeed");
+//                status.setText(status.getText() + "Fingerprint succeed");
                 login("chan", "Gover!123");
 
             }
@@ -367,10 +389,21 @@ public class LoginActivity extends Activity {
         cancellationSignal.setOnCancelListener(new CancellationSignal.OnCancelListener() {
             @Override
             public void onCancel() {
-                status.setText(status.getText() + "Fingerprint cancelled by signal");
+//                status.setText(status.getText() + "Fingerprint cancelled by signal");
+                     
             }
         });
         return cancellationSignal;
     }
 
+    public void setAnimation() {
+        if (Build.VERSION.SDK_INT > 20) {
+            Slide slide = new Slide();
+            slide.setSlideEdge(Gravity.LEFT);
+            slide.setDuration(400);
+            slide.setInterpolator(new DecelerateInterpolator());
+            getWindow().setExitTransition(slide);
+            getWindow().setEnterTransition(slide);
+        }
+    }
 }

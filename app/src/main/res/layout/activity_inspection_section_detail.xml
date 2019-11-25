@@ -13,7 +13,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:text="Section Name"
-        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtInstructions" />
 
@@ -24,6 +25,8 @@
         android:layout_marginTop="20dp"
         android:text="Choose an item to be evaluated"
         android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="@color/colorGrey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +35,8 @@
         android:id="@+id/itemsList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"

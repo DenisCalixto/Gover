@@ -2,13 +2,18 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -42,6 +47,9 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+        setAnimation();
+
         setContentView(R.layout.activity_profile);
 
         user_name = findViewById(R.id.user_name);
@@ -56,7 +64,11 @@ public class ProfileActivity extends AppCompatActivity {
                 Auth.accessToken = null;
 
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ProfileActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
@@ -103,5 +115,15 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonRequest);
 
+    }
+    public void setAnimation() {
+        if (Build.VERSION.SDK_INT > 20) {
+            Slide slide = new Slide();
+            slide.setSlideEdge(Gravity.LEFT);
+            slide.setDuration(400);
+            slide.setInterpolator(new DecelerateInterpolator());
+            getWindow().setExitTransition(slide);
+            getWindow().setEnterTransition(slide);
+        }
     }
 }
