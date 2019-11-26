@@ -83,18 +83,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="20dp"
             android:paddingEnd="60dp"
             android:shadowColor="@color/design_default_color_on_secondary"
             android:text="New Inspection"
-            android:textColor="@color/colorPrimaryDark"
-            android:visibility="invisible" />
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:paddingStart="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/btnsalmonround"/>
 
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="281dp"
-        android:layout_height="92dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         app:layout_constraintBottom_toTopOf="@+id/floating_add"
         app:layout_constraintEnd_toEndOf="parent">
@@ -105,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            android:elevation="10dp"
             android:focusable="true"
             android:src="@drawable/ic_properties_white"
             android:visibility="invisible"
@@ -115,16 +120,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="10dp"
+            android:background="@drawable/btnsalmonround"
             android:paddingStart="14dp"
-            android:layout_marginEnd="10dp"
             android:paddingTop="10dp"
-            android:paddingEnd="14dp"
+            android:paddingEnd="60dp"
             android:paddingBottom="10dp"
             android:shadowColor="@color/colorPrimaryDark"
             android:text="Add Property"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:visibility="invisible" />
 

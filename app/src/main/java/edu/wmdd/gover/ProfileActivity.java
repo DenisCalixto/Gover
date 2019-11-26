@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
-        setAnimation();
+//        setAnimation();
 
         setContentView(R.layout.activity_profile);
 
@@ -82,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
         //Start Bottom Nav
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -152,14 +154,14 @@ public class ProfileActivity extends AppCompatActivity {
         requestQueue.add(jsonRequest);
 
     }
-    public void setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.LEFT);
-            slide.setDuration(400);
-            slide.setInterpolator(new DecelerateInterpolator());
-            getWindow().setExitTransition(slide);
-            getWindow().setEnterTransition(slide);
-        }
-    }
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }

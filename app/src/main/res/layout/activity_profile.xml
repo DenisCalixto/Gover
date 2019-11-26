@@ -134,9 +134,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/design_default_color_background"
-            app:itemIconTint="@color/colorPrimary"
-            app:itemTextColor="@color/colorPrimary"
-            app:labelVisibilityMode="unlabeled"
+            app:itemTextColor="@color/color_selector"
+            app:itemIconTint="@color/color_selector"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
