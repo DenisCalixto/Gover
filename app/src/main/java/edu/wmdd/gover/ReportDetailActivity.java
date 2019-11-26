@@ -74,7 +74,7 @@ public class ReportDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setAnimation();
+//        setAnimation();
 
         setContentView(R.layout.activity_report_detail);
 
@@ -502,14 +502,14 @@ public class ReportDetailActivity extends AppCompatActivity {
 
     }
 
-    public void setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.LEFT);
-            slide.setDuration(400);
-            slide.setInterpolator(new DecelerateInterpolator());
-            getWindow().setExitTransition(slide);
-            getWindow().setEnterTransition(slide);
-        }
-    }
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }

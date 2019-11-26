@@ -94,7 +94,7 @@ public class ReportListActivity extends AppCompatActivity {
 
         mList.setHasFixedSize(true);
         mList.setLayoutManager(linearLayoutManager);
-        mList.addItemDecoration(dividerItemDecoration);
+//        mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
         SearchView searchViewInspections = findViewById(R.id.searchViewReports);

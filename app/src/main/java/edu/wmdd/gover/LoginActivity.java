@@ -65,7 +65,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setAnimation();
+//        setAnimation();
 
         setContentView(R.layout.login_activity);
 
@@ -396,14 +396,14 @@ public class LoginActivity extends Activity {
         return cancellationSignal;
     }
 
-    public void setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.LEFT);
-            slide.setDuration(400);
-            slide.setInterpolator(new DecelerateInterpolator());
-            getWindow().setExitTransition(slide);
-            getWindow().setEnterTransition(slide);
-        }
-    }
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }

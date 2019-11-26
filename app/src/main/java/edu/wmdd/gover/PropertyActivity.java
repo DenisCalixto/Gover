@@ -111,11 +111,12 @@ public class PropertyActivity extends AppCompatActivity {
 
         mList.setHasFixedSize(true);
         mList.setLayoutManager(linearLayoutManager);
-        mList.addItemDecoration(dividerItemDecoration);
+//        mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setQueryHint(getString(R.string.property_search_hint));
+
 
 
 //Start Bottom Nav

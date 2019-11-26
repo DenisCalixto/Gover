@@ -51,7 +51,7 @@ public class TenantDetailActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
-        setAnimation();
+//        setAnimation();
 
         setContentView(R.layout.activity_tenant_detail);
 
@@ -190,15 +190,15 @@ public class TenantDetailActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            Slide slide = new Slide();
-            slide.setSlideEdge(Gravity.LEFT);
-            slide.setDuration(400);
-            slide.setInterpolator(new DecelerateInterpolator());
-            getWindow().setExitTransition(slide);
-            getWindow().setEnterTransition(slide);
-        }
-    }
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 
 }
