@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportDetailActivity">
+    tools:context=".ReportDetailActivity"
+    android:background="@color/colorWhite">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:text="Property Report"
-        android:textSize="36sp"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,10 +23,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:text="Renting Inspection"
-        android:textSize="24sp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -32,7 +35,7 @@
         android:id="@+id/owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:text="Owner"
         android:textSize="18sp"
@@ -43,8 +46,8 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="6dp"
         android:text="Address"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +57,8 @@
         android:id="@+id/tenant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="6dp"
         android:text="Tenant"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +68,8 @@
         android:id="@+id/notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="6dp"
         android:text="Notes"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,33 +77,53 @@
 
     <ImageView
         android:id="@+id/propertyImage"
-        android:layout_width="199dp"
-        android:layout_height="94dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/btSign"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_photo_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notes" />
+
+    <ImageView
+        android:id="@+id/signImage"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/propertyImage"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btSign"
-        android:layout_width="180dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="20dp"
-        android:text="SIGN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/gradient"
+        android:text="sign"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btShareReport"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signImage" />
 
     <Button
         android:id="@+id/btSaveReport"
         android:layout_width="180dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="SAVE"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btnblue"
+        android:text="save"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -108,22 +131,15 @@
     <Button
         android:id="@+id/btShareReport"
         android:layout_width="180dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:text="SHARE"
+        android:background="@drawable/btnsalmon"
+        android:text="share"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/signImage"
-        android:layout_width="90dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="188dp"
-        android:layout_marginBottom="316dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

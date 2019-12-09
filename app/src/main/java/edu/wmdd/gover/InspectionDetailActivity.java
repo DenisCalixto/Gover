@@ -2,17 +2,22 @@ package edu.wmdd.gover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -77,6 +82,9 @@ public class InspectionDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+//        setAnimation();
+
         setContentView(R.layout.activity_inspection_detail);
 
         sections = new ArrayList<InspectionSection>();
@@ -92,7 +100,12 @@ public class InspectionDetailActivity extends AppCompatActivity {
                 intent.putExtra("inspectionId", inspectionId);
                 intent.putExtra("sectionId", section.getId());
                 intent.putExtra("sectionName", section.getName());
-                startActivity(intent);
+
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
@@ -126,7 +139,11 @@ public class InspectionDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(InspectionDetailActivity.this, ReportDetailActivity.class);
                 intent.putExtra("inspectionId", inspectionId);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
@@ -321,20 +338,32 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private void addSection() {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
         intent.putExtra("inspectionId", inspectionId);
-        startActivity(intent);
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+        startActivity(intent, options.toBundle());
+
+//        startActivity(intent);
     }
 
     private void addTenant() {
         Intent intent = new Intent(InspectionDetailActivity.this, TenantDetailActivity.class);
         intent.putExtra("inspectionId", inspectionId);
-        startActivity(intent);
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+        startActivity(intent, options.toBundle());
+
+//        startActivity(intent);
     }
 
     private void editSection(Integer section_id) {
         Intent intent = new Intent(InspectionDetailActivity.this, InspectionDetailActivity.class);
         intent.putExtra("inspectionId", inspectionId);
         intent.putExtra("section_id", section_id);
-        startActivity(intent);
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+        startActivity(intent, options.toBundle());
+
+//        startActivity(intent);
     }
 
     private void loadTemplate() {
@@ -414,7 +443,22 @@ public class InspectionDetailActivity extends AppCompatActivity {
     private void saveInspection() {
         Toast.makeText(InspectionDetailActivity.this, "Inspection saved!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(InspectionDetailActivity.this, PropertyActivity.class);
-        startActivity(intent);
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionDetailActivity.this);
+        startActivity(intent, options.toBundle());
+
+//        startActivity(intent);
     }
+
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 
 }

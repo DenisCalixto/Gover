@@ -3,6 +3,7 @@ package edu.wmdd.gover;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -10,14 +11,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -81,6 +86,9 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+//        setAnimation();
+
         setContentView(R.layout.activity_inspection_item_detail);
 
         Intent intent = getIntent();
@@ -159,7 +167,11 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
             else {
                 Toast.makeText(InspectionItemDetailActivity.this, "Error loading the item!", Toast.LENGTH_LONG).show();
                 Intent intent2 = new Intent(InspectionItemDetailActivity.this, InspectionDetailActivity.class);
-                startActivity(intent2);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionItemDetailActivity.this);
+                startActivity(intent2, options.toBundle());
+
+//                startActivity(intent2);
             }
         }
     }
@@ -316,7 +328,11 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
                 Toast.makeText(InspectionItemDetailActivity.this, "Item saved!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(InspectionItemDetailActivity.this, InspectionDetailActivity.class);
                 intent.putExtra("inspectionId", inspectionId);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionItemDetailActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -412,4 +428,15 @@ public class InspectionItemDetailActivity extends AppCompatActivity {
 //        super.onActivityResult(requestCode, resultCode, data);
 //    }
 //    //==========================
+
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }

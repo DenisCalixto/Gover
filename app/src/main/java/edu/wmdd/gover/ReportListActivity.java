@@ -1,13 +1,18 @@
 package edu.wmdd.gover;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
@@ -62,6 +67,9 @@ public class ReportListActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+//        setAnimation();
+
         setContentView(R.layout.activity_report_list);
 
         mList = findViewById(R.id.report_list);
@@ -71,7 +79,11 @@ public class ReportListActivity extends AppCompatActivity {
         RecyclerViewClickListener listener = (view, position) -> {
             Intent intent = new Intent(ReportListActivity.this, ReportDetailActivity.class);
             intent.putExtra("reportId", reportList.get(position).getId());
-            startActivity(intent);
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
+            startActivity(intent, options.toBundle());
+
+//            startActivity(intent);
         };
         
         adapter = new ReportAdapter(getApplicationContext(),reportList, listener);
@@ -82,7 +94,7 @@ public class ReportListActivity extends AppCompatActivity {
 
         mList.setHasFixedSize(true);
         mList.setLayoutManager(linearLayoutManager);
-        mList.addItemDecoration(dividerItemDecoration);
+//        mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);
 
         SearchView searchViewInspections = findViewById(R.id.searchViewReports);
@@ -94,24 +106,47 @@ public class ReportListActivity extends AppCompatActivity {
         //Start Bottom Nav
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.getMenu().getItem(0).setChecked(false);
+//        bottomNavigationView.getMenu().getItem(1).setChecked(false);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+//        bottomNavigationView.getMenu().getItem(3).setChecked(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if( item.getItemId() == R.id.btProperties){
+
                     Intent intent = new Intent(ReportListActivity.this, PropertyActivity.class);
-                    startActivity(intent);
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
                 }
                 else if( item.getItemId() == R.id.btInspections){
+
+
                     Intent intent = new Intent(ReportListActivity.this, InspectionListActivity.class);
-                    startActivity(intent);
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
                 }
                 else if( item.getItemId() == R.id.btReports){
                     Intent intent = new Intent(ReportListActivity.this, ReportListActivity.class);
-                    startActivity(intent);
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
                 }
                 else{
                     Intent intent = new Intent(ReportListActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ReportListActivity.this);
+                    startActivity(intent, options.toBundle());
+
+//                    startActivity(intent);
                 }
                 return false;
             }
@@ -176,5 +211,16 @@ public class ReportListActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }
 

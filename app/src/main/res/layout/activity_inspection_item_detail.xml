@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Evaluate Room Item"
-        android:textSize="30sp"
+        android:textColor="@color/colorGrey"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +26,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="SectionName"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +37,11 @@
         android:id="@+id/itemName"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="10dp"
         android:text="ItemName"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sectionName" />
@@ -45,7 +50,7 @@
         android:id="@+id/radioGroupState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,24 +58,32 @@
 
         <RadioButton
             android:id="@+id/radio_damaged"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inspection_item_status_damaged" />
 
         <RadioButton
             android:id="@+id/radio_scratched"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inspection_item_status_scratched" />
 
         <RadioButton
             android:id="@+id/radio_missing"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inspection_item_status_missing" />
 
         <RadioButton
             android:id="@+id/radio_good"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inspection_item_status_good" />
@@ -80,10 +93,11 @@
         android:id="@+id/notes"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
         android:ems="10"
+        android:hint="Write notes..."
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,10 +106,13 @@
 
     <ImageView
         android:id="@+id/propertyImage"
-        android:layout_width="199dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/logo"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_photo_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takePicButton" />
@@ -104,19 +121,29 @@
         android:id="@+id/takePicButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Take Picture"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/btnblue"
+        android:textColor="@color/colorWhite"
+        android:drawableStart="@drawable/ic_camera_white"
+        android:textAllCaps="false"
+        android:text="Take Photos"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes" />
 
     <Button
         android:id="@+id/btSaveItem"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@drawable/btnsalmon"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Save Evaluation"
+        android:layout_marginStart="10dp"
+        android:text="save item"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -124,9 +151,14 @@
         android:id="@+id/btnSpeak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="32dp"
-        android:text="Click to speak"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="Voice Memo"
+        android:textAllCaps="false"
+        android:drawableStart="@drawable/ic_voice_memo"
+        android:padding="10dp"
+        android:background="@drawable/btnblue"
+        android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes" />
 

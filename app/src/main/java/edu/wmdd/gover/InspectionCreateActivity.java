@@ -1,12 +1,17 @@
 package edu.wmdd.gover;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -54,6 +59,9 @@ public class InspectionCreateActivity extends AppCompatActivity {
             getSupportActionBar().hide(); // hide the title bar
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+//            setAnimation();
+
             setContentView(R.layout.activity_inspection_create);
 
             mList = findViewById(R.id.property_list);
@@ -65,7 +73,11 @@ public class InspectionCreateActivity extends AppCompatActivity {
                 //Log.d("Volley", propertyList.get(position).notes);
                 Intent intent = new Intent(InspectionCreateActivity.this, InspectionDetailActivity.class);
                 intent.putExtra("property_id", propertyList.get(position).getId());
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(InspectionCreateActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             };
 
             adapter = new PropertyAdapter(getApplicationContext(), propertyList, listener);
@@ -76,7 +88,7 @@ public class InspectionCreateActivity extends AppCompatActivity {
 
             mList.setHasFixedSize(true);
             mList.setLayoutManager(linearLayoutManager);
-            mList.addItemDecoration(dividerItemDecoration);
+//            mList.addItemDecoration(dividerItemDecoration);
             mList.setAdapter(adapter);
 
             getData();
@@ -129,5 +141,16 @@ public class InspectionCreateActivity extends AppCompatActivity {
             requestQueue.add(jsonArrayRequest);
 
         }
+
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }
 

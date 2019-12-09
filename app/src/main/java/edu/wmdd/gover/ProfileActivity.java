@@ -1,14 +1,20 @@
 package edu.wmdd.gover;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,6 +27,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,11 +36,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.Menu;
+
 public class ProfileActivity extends AppCompatActivity {
 
     EditText user_name;
     EditText user_email;
     EditText user_password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,9 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
+//        setAnimation();
+
         setContentView(R.layout.activity_profile);
 
         user_name = findViewById(R.id.user_name);
@@ -56,12 +71,47 @@ public class ProfileActivity extends AppCompatActivity {
                 Auth.accessToken = null;
 
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                startActivity(intent);
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ProfileActivity.this);
+                startActivity(intent, options.toBundle());
+
+//                startActivity(intent);
             }
         });
 
+        //Start Bottom Nav
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if( item.getItemId() == R.id.btProperties){
+                    Intent intent = new Intent(ProfileActivity.this, PropertyActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btInspections){
+                    Intent intent = new Intent(ProfileActivity.this, InspectionListActivity.class);
+                    startActivity(intent);
+                }
+                else if( item.getItemId() == R.id.btReports){
+                    Intent intent = new Intent(ProfileActivity.this, ReportListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
+//End Bottom Nav
+
         getData();
     }
+
+
 
     private void getData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -104,4 +154,14 @@ public class ProfileActivity extends AppCompatActivity {
         requestQueue.add(jsonRequest);
 
     }
+//    public void setAnimation() {
+//        if (Build.VERSION.SDK_INT > 20) {
+//            Slide slide = new Slide();
+//            slide.setSlideEdge(Gravity.LEFT);
+//            slide.setDuration(400);
+//            slide.setInterpolator(new DecelerateInterpolator());
+//            getWindow().setExitTransition(slide);
+//            getWindow().setEnterTransition(slide);
+//        }
+//    }
 }
